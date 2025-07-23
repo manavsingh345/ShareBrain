@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { ShareIcon } from "../../icons/ShareIcon";
 import { DeleteIcon } from "../../icons/DeleteIcon";
+import { TwitterIcon } from "../../icons/TwitterIcon";
+import { YoutubeIcon } from "../../icons/YoutubeIcon";
 
 
 
@@ -35,7 +37,13 @@ export function Card({ title, link, type, onDelete, date }: CardProps) {
         <div className="flex justify-between">
           <div className="flex items-center text-md">
             <div className="text-gray-500 pr-2">
-              <ShareIcon size="md" />
+              {/* <ShareIcon size="md" /> */}
+              {type ==="twitter" && <a href={link} target="_blank" rel="noopener noreferrer">
+                <TwitterIcon/>
+              </a>}
+              {type ==="youtube" && <a href={link} target="_blank" rel="noopener noreferrer">
+                <YoutubeIcon/>
+              </a>}
             </div>
           </div>
           <h2 className="text-center text-lg font-semibold w-full">{title}</h2>
@@ -57,7 +65,7 @@ export function Card({ title, link, type, onDelete, date }: CardProps) {
         <div className="p-4">
           {type === "youtube" && (
             <iframe
-              className="w-full h-full rounded"
+              className="w-full h-[200px] rounded"
               src={link.replace("watch", "embed").replace("?v=", "/")}
               title="YouTube video player"
               frameBorder="0"
@@ -68,7 +76,7 @@ export function Card({ title, link, type, onDelete, date }: CardProps) {
           )}
 
           {type === "twitter" && (
-            <div className="w-full h-full overflow-hidden">
+            <div className="w-full max-h-[200px] overflow-auto rounded border border-gray-200">
               <blockquote className="twitter-tweet w-full h-full overflow-auto">
                 <a href={link.replace("x.com", "twitter.com")}></a>
               </blockquote>
