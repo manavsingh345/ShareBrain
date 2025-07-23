@@ -1,6 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ShareIcon } from "../../icons/ShareIcon";
 import { DeleteIcon } from "../../icons/DeleteIcon";
+
+
 
 interface CardProps {
   title: string;
@@ -8,9 +10,11 @@ interface CardProps {
   type: "twitter" | "youtube";
   contentId: string;
   onDelete?: () => void;
+  date?: string;
 }
 
-export function Card({ title, link, type, onDelete }: CardProps) {
+export function Card({ title, link, type, onDelete, date }: CardProps) {
+  const [displayDate] = useState(() => date ?? new Date().toLocaleDateString("en-US"));
   async function handleDeleteContent() {
     try {
       if (onDelete) onDelete(); 
@@ -70,6 +74,7 @@ export function Card({ title, link, type, onDelete }: CardProps) {
               </blockquote>
             </div>
           )}
+          <p className="text-sm text-gray-500 pt-4">Added on: {displayDate}</p>
         </div>
       </div>
     </div>
