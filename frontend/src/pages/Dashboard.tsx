@@ -14,7 +14,7 @@ export function Dashboard() {
   _id: string;
   title: string;
   link: string;
-  type: "youtube" | "twitter";
+  type: "youtube" | "twitter" | "document" | "links";
 }
 
 const [contents, setContents] = useState<Content[]>([]);

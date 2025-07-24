@@ -3,13 +3,12 @@ import { ShareIcon } from "../../icons/ShareIcon";
 import { DeleteIcon } from "../../icons/DeleteIcon";
 import { TwitterIcon } from "../../icons/TwitterIcon";
 import { YoutubeIcon } from "../../icons/YoutubeIcon";
-
-
-
+import { Document } from "../../icons/Document";
+import { LinkIcon } from "../../icons/LinkIcon";
 interface CardProps {
   title: string;
   link: string;
-  type: "twitter" | "youtube";
+  type: "twitter" | "youtube" | "document" | "links";
   contentId: string;
   onDelete?: () => void;
   date?: string;
@@ -44,14 +43,17 @@ export function Card({ title, link, type, onDelete, date }: CardProps) {
               {type ==="youtube" && <a href={link} target="_blank" rel="noopener noreferrer">
                 <YoutubeIcon/>
               </a>}
+              {type==="document" && <Document/>}
+              {type==="links" && <a href={link} target="_blank" rel="noopener noreferrer"><LinkIcon/></a>}
             </div>
           </div>
           <h2 className="text-center text-lg font-semibold w-full">{title}</h2>
           <div className="flex items-center">
             <div className="pr-2 text-gray-500">
-              <a href={link} target="_blank" rel="noopener noreferrer">
+              {type!=="document" && (<a href={link} target="_blank" rel="noopener noreferrer">
                 <ShareIcon size="md" />
-              </a>
+              </a>) }
+              
             </div>
             <div
               className="text-gray-500 cursor-pointer"
@@ -82,6 +84,17 @@ export function Card({ title, link, type, onDelete, date }: CardProps) {
               </blockquote>
             </div>
           )}
+          {type==="document" && (
+            <div className="bg-white p-4 rounded-lg shadow-md">
+             <p className="text-gray-800 whitespace-pre-line mt-2">{link}</p>
+            </div>
+          )}
+          {type === "links" && (
+          <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline mt-2 inline-block">
+                  Visit Link ↗
+          </a>
+          )}
+
           <p className="text-sm text-gray-500 pt-4">Added on: {displayDate}</p>
         </div>
       </div>
