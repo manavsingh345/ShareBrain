@@ -1,6 +1,7 @@
 import { Logo } from "../../icons/Logo";
 import { TwitterIcon } from "../../icons/TwitterIcon";
 import { YoutubeIcon } from "../../icons/YoutubeIcon";
+import { Document } from "../../icons/Document";
 import { SidebarItem } from "./SidebarItem";
 
 export function Sidebar(){
@@ -11,6 +12,7 @@ export function Sidebar(){
             <div className="pt-6">
             <SidebarItem text="Twitter" icon={<TwitterIcon/>}/>
             <SidebarItem text="Youtube" icon={<YoutubeIcon/>}/>
+            <SidebarItem text="Document" icon={<Document/>}/>
             </div>
         </div>
     )
