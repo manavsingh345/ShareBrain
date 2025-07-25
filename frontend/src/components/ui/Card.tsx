@@ -34,7 +34,7 @@ export function Card({ title, link, type, onDelete, date }: CardProps) {
 
   return (
     <div>
-      <div className="p-4 bg-white rounded-md shadow-md border-gray-200 border-2 w-80 h-[350px] overflow-hidden">
+      <div className="p-4 bg-white rounded-md shadow-md border-gray-200 border-2 w-80 h-[350px] overflow-hidden transition-transform duration-300 hover:scale-110 hover:z-10">
         <div className="flex justify-between">
           <div className="flex items-center text-md">
             <div className="text-gray-500 pr-2">
