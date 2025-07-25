@@ -5,6 +5,8 @@ import { TwitterIcon } from "../../icons/TwitterIcon";
 import { YoutubeIcon } from "../../icons/YoutubeIcon";
 import { Document } from "../../icons/Document";
 import { LinkIcon } from "../../icons/LinkIcon";
+import Microlink from '@microlink/react';
+
 interface CardProps {
   title: string;
   link: string;
@@ -89,11 +91,17 @@ export function Card({ title, link, type, onDelete, date }: CardProps) {
              <p className="text-gray-800 whitespace-pre-line mt-2">{link}</p>
             </div>
           )}
-          {type === "links" && (
+          {/* {type === "links" && (
           <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline mt-2 inline-block">
                   Visit Link ↗
           </a>
+          )} */}
+          {type === "links" && (
+          <div className="mt-2 rounded overflow-hidden w-full h-[200px]">
+              <Microlink url={link} size="large" />
+          </div>
           )}
+
 
           <p className="text-sm text-gray-500 pt-4">Added on: {displayDate}</p>
         </div>
