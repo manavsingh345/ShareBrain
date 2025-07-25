@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@babel/runtime": "^7.28.2",
+    "@microlink/react": "^5.5.23",
     "@tailwindcss/vite": "^4.1.11",
     "axios": "^1.10.0",
     "clsx": "^2.1.1",
