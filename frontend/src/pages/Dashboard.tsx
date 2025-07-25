@@ -18,7 +18,7 @@ export function Dashboard() {
 }
 
 const [contents, setContents] = useState<Content[]>([]);
-
+const [selectedType, setSelectedType] = useState<"twitter" | "youtube" | "document" | "links">("twitter");
 
   useEffect(() => {
     fetchContents();
@@ -51,10 +51,10 @@ const [contents, setContents] = useState<Content[]>([]);
   }
 };
 
-
+  const filteredContents = contents.filter(content => content.type === selectedType);
   return (
     <div>
-      <Sidebar />
+      <Sidebar selectedType={selectedType} onSelectType={setSelectedType}/>
       <div className="p-4 ml-72 min-h-screen bg-gray-100">
         <CreateContentModel
           open={modelOpen}
@@ -100,8 +100,8 @@ const [contents, setContents] = useState<Content[]>([]);
             size="md"
           />
         </div>
-        <div className="flex gap-4 flex-wrap">
-          {contents.map(({ type, link, title, _id }) => (
+        <div className="flex gap-6 flex-wrap">
+          {filteredContents.map(({ type, link, title, _id }) => (
             <Card
               key={_id}
               type={type}
