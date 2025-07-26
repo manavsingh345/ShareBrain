@@ -14,9 +14,11 @@ interface CardProps {
   contentId: string;
   onDelete?: () => void;
   date?: string;
+  onClick?: () => void;
+
 }
 
-export function Card({ title, link, type, onDelete, date }: CardProps) {
+export function Card({ title, link, type, onDelete, date,onClick }: CardProps) {
   const [displayDate] = useState(() => date ?? new Date().toLocaleDateString("en-US"));
   async function handleDeleteContent() {
     try {
@@ -33,7 +35,7 @@ export function Card({ title, link, type, onDelete, date }: CardProps) {
   }, [link, type]);
 
   return (
-    <div>
+    <div onClick={onClick} className="cursor-pointer">
       <div className="p-4 bg-white rounded-md shadow-md border-gray-200 border-2 w-80 h-[350px] overflow-hidden transition-transform duration-300 hover:scale-110 hover:z-10">
         <div className="flex justify-between">
           <div className="flex items-center text-md">
@@ -52,14 +54,18 @@ export function Card({ title, link, type, onDelete, date }: CardProps) {
           <h2 className="text-center text-lg font-semibold w-full">{title}</h2>
           <div className="flex items-center">
             <div className="pr-2 text-gray-500">
-              {type!=="document" && (<a href={link} target="_blank" rel="noopener noreferrer">
+              {type!=="document" && (<a href={link} target="_blank" rel="noopener noreferrer"   onClick={(e) => e.stopPropagation()}>
                 <ShareIcon size="md" />
               </a>) }
               
             </div>
             <div
               className="text-gray-500 cursor-pointer"
-              onClick={handleDeleteContent}
+              onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeleteContent();
+              }}
+
             >
               <DeleteIcon size="md" />
             </div>
