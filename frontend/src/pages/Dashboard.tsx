@@ -7,18 +7,21 @@ import { CreateContentModel } from '../components/ui/CreateContentModel';
 import { Sidebar } from '../components/ui/Sidebar';
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
+import Microlink from '@microlink/react';
 
 export function Dashboard() {
   const [modelOpen, setModelOpen] = useState(false);
-  interface Content {
-  _id: string;
-  title: string;
-  link: string;
-  type: "youtube" | "twitter" | "document" | "links";
-}
+  const [selectedCard, setSelectedCard] = useState<Content | null>(null);
 
-const [contents, setContents] = useState<Content[]>([]);
-const [selectedType, setSelectedType] = useState<"twitter" | "youtube" | "document" | "links">("twitter");
+  interface Content {
+    _id: string;
+    title: string;
+    link: string;
+    type: "youtube" | "twitter" | "document" | "links";
+  }
+
+  const [contents, setContents] = useState<Content[]>([]);
+  const [selectedType, setSelectedType] = useState<"twitter" | "youtube" | "document" | "links">("twitter");
 
   useEffect(() => {
     fetchContents();
@@ -31,43 +34,49 @@ const [selectedType, setSelectedType] = useState<"twitter" | "youtube" | "docume
           Authorization: localStorage.getItem('token'),
         },
       });
-      setContents(res.data.content); // adjust if backend uses .data.contents or similar
+      setContents(res.data.content);
     } catch (err) {
       console.error('Failed to fetch contents', err);
     }
   };
 
   const handleDelete = async (contentId: string) => {
-  try {
-    await axios.delete(`${BACKEND_URL}/api/v1/content/${contentId}`, {
-      headers: {
-        Authorization: localStorage.getItem("token"),
-      },
-    });
-    setContents(prev => prev.filter(item => item._id !== contentId));
-  } catch (err) {
-    console.error("Failed to delete content", err);
-    alert("Error deleting content");
-  }
-};
+    try {
+      await axios.delete(`${BACKEND_URL}/api/v1/content/${contentId}`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      setContents(prev => prev.filter(item => item._id !== contentId));
+    } catch (err) {
+      console.error("Failed to delete content", err);
+      alert("Error deleting content");
+    }
+  };
+
+  // Reload Twitter embed when modal opens
+  useEffect(() => {
+    if (selectedCard?.type === "twitter" && (window as any).twttr) {
+      (window as any).twttr.widgets.load();
+    }
+  }, [selectedCard]);
 
   const filteredContents = contents.filter(content => content.type === selectedType);
+
   return (
     <div>
-      <Sidebar selectedType={selectedType} onSelectType={setSelectedType}/>
+      <Sidebar selectedType={selectedType} onSelectType={setSelectedType} />
       <div className="p-4 ml-72 min-h-screen bg-gray-100">
         <CreateContentModel
           open={modelOpen}
           onClose={() => {
             setModelOpen(false);
-            fetchContents(); // refetch after adding new content
+            fetchContents();
           }}
         />
         <div className="flex justify-end gap-4">
           <Button
-            onClick={() => {
-              setModelOpen(true);
-            }}
+            onClick={() => setModelOpen(true)}
             startIcon={<PlusIcon size="lg" />}
             variant="primary"
             text="Add content"
@@ -78,9 +87,7 @@ const [selectedType, setSelectedType] = useState<"twitter" | "youtube" | "docume
               try {
                 const response = await axios.post(
                   `${BACKEND_URL}/api/v1/brain/share`,
-                  {
-                    share: true,
-                  },
+                  { share: true },
                   {
                     headers: {
                       Authorization: localStorage.getItem('token'),
@@ -100,6 +107,7 @@ const [selectedType, setSelectedType] = useState<"twitter" | "youtube" | "docume
             size="md"
           />
         </div>
+
         <div className="flex gap-6 flex-wrap">
           {filteredContents.map(({ type, link, title, _id }) => (
             <Card
@@ -109,9 +117,57 @@ const [selectedType, setSelectedType] = useState<"twitter" | "youtube" | "docume
               title={title}
               contentId={_id}
               onDelete={() => handleDelete(_id)}
+              onClick={() => setSelectedCard({ _id, title, link, type })}
             />
           ))}
         </div>
+
+        {/* Big card modal */}
+        {selectedCard && (
+          <div className="fixed inset-0 backdrop-blur-sm bg-transparent  flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg max-w-3xl w-full h-[80vh] overflow-y-auto relative">
+              <button
+                className="absolute top-4 right-4 text-gray-500 hover:text-black text-2xl"
+                onClick={() => setSelectedCard(null)}
+              >
+                ×
+              </button>
+              <h2 className="text-xl font-semibold mb-4">{selectedCard.title}</h2>
+
+              {selectedCard.type === "youtube" && (
+                <iframe
+                  className="w-full h-[400px] rounded"
+                  src={selectedCard.link.replace("watch", "embed").replace("?v=", "/")}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                ></iframe>
+              )}
+
+              {selectedCard.type === "twitter" && (
+                <div className="flex justify-center">
+                <blockquote className="twitter-tweet w-full">
+                  <a href={selectedCard.link.replace("x.com", "twitter.com")}></a>
+                </blockquote>
+                </div>
+              )}
+
+              {selectedCard.type === "document" && (
+                
+                <p className="whitespace-pre-line text-gray-800 mt-2">{selectedCard.link}</p>
+                
+              )}
+
+              {selectedCard.type === "links" && (
+                <div className="flex justify-center mt-2">
+                  <Microlink url={selectedCard.link} size="large" />
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
