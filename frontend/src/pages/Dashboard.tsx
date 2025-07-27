@@ -132,7 +132,7 @@ export function Dashboard() {
               >
                 ×
               </button>
-              <h2 className="text-xl font-semibold mb-4">{selectedCard.title}</h2>
+              <h2 className="text-xl flex justify-center font-semibold mb-4">{selectedCard.title}</h2>
 
               {selectedCard.type === "youtube" && (
                 <iframe
