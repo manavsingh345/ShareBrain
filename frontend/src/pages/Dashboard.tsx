@@ -127,7 +127,7 @@ export function Dashboard() {
           <div className="fixed inset-0 backdrop-blur-sm bg-transparent  flex items-center justify-center z-50">
             <div className="bg-white p-6 rounded-lg max-w-3xl w-full h-[80vh] overflow-y-auto relative">
               <button
-                className="absolute top-4 right-4 text-gray-500 hover:text-black text-2xl"
+                className="absolute top-4 right-4 text-gray-500 hover:text-black text-2xl cursor-pointer"
                 onClick={() => setSelectedCard(null)}
               >
                 ×
@@ -136,7 +136,7 @@ export function Dashboard() {
 
               {selectedCard.type === "youtube" && (
                 <iframe
-                  className="w-full h-[400px] rounded"
+                  className="w-full h-[470px] rounded-md pl-5 pr-5"
                   src={selectedCard.link.replace("watch", "embed").replace("?v=", "/")}
                   title="YouTube video player"
                   frameBorder="0"
@@ -160,11 +160,18 @@ export function Dashboard() {
                 
               )}
 
-              {selectedCard.type === "links" && (
-                <div className="flex justify-center mt-2">
-                  <Microlink url={selectedCard.link} size="large" />
-                </div>
-              )}
+             {selectedCard.type === "links" && (
+              <div className="w-full h-[470px]">
+                    <div className="w-full h-full block">
+                    <Microlink
+                      url={selectedCard.link}
+                      size="large"
+                      style={{ height: "100%" ,maxWidth: "100%"}}
+                    />
+                    </div>
+            </div>
+            )}
+
             </div>
           </div>
         )}
