@@ -92,10 +92,12 @@ export function Card({ title, link, type, onDelete, date,onClick }: CardProps) {
               </blockquote>
             </div>
           )}
-          {type==="document" && (
-            <div className="bg-white p-4 rounded-lg shadow-md">
-             <p className="text-gray-800 whitespace-pre-line mt-2">{link}</p>
-            </div>
+          {type === "document" && (
+              <div className="bg-white p-4 rounded-lg shadow-md h-[200px] overflow-auto">
+                <p className="text-gray-800 whitespace-pre-line mt-2">
+                  {link}
+                </p>
+              </div>
           )}
           {/* {type === "links" && (
           <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline mt-2 inline-block">
