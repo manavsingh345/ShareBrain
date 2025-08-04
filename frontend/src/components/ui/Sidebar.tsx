@@ -22,22 +22,16 @@ export function Sidebar({ selectedType, onSelectType }: SidebarProps) {
       </div>
       <div className="pt-8 flex flex-col space-y-4">
         <SidebarItem
-          text="Twitter"
-          icon={<TwitterIcon />}
-          selected={selectedType === "twitter"}
-          onClick={() => onSelectType("twitter")}
-        />
-        <SidebarItem
           text="Youtube"
           icon={<YoutubeIcon />}
           selected={selectedType === "youtube"}
           onClick={() => onSelectType("youtube")}
         />
         <SidebarItem
-          text="Document"
-          icon={<Document />}
-          selected={selectedType === "document"}
-          onClick={() => onSelectType("document")}
+          text="Twitter"
+          icon={<TwitterIcon />}
+          selected={selectedType === "twitter"}
+          onClick={() => onSelectType("twitter")}
         />
         <SidebarItem
           text="Links"
@@ -45,6 +39,13 @@ export function Sidebar({ selectedType, onSelectType }: SidebarProps) {
           selected={selectedType === "links"}
           onClick={() => onSelectType("links")}
         />
+        <SidebarItem
+          text="Document"
+          icon={<Document />}
+          selected={selectedType === "document"}
+          onClick={() => onSelectType("document")}
+        />
+        
       </div>
     </div>
   );
