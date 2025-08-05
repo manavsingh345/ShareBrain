@@ -44,63 +44,72 @@ export function CreateContentModel({ open, onClose }: any) {
 
 
   return (
-    <div>
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-transparent">
-          <div className="flex flex-col justify-center">
-            <span className="bg-white p-6 rounded shadow-lg w-full max-w-md">
-              <div className="flex justify-end">
-                <div onClick={onClose} className="cursor-pointer">
-                <CrossIcon />
-                </div>
-              </div>
-              <div>
-                <Input ref={titleRef} placeholder="Title" />
-                {type===ContentType.Document ? (
-                  <textarea ref={textRef} placeholder="Write your note here..." 
-                  className="mt-3 w-full h-40 p-4 border border-gray-300 rounded-xl resize-none shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
-                   id=""></textarea>
-                ): (<Input ref={linkRef} placeholder="Link"/>)}
+  <div>
+    {open && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-30 backdrop-blur-sm">
+        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6">
+          {/* Close Button */}
+          <div className="flex justify-end">
+            <button onClick={onClose} className="text-gray-500 hover:text-red-500 transition">
+              <CrossIcon />
+            </button>
+          </div>
 
+          {/* Header */}
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">Craft Your Content Here</h2>
 
-              </div>
-              <div >
-                <div className="flex justify-center">
-                    <h1>Type</h1>
-                </div>
-                
-                <div className='flex justify-center gap-2 p-4 '>
-                  
-                <Button size="md" text="Youtube" variant={type===ContentType.Youtube ? "primary" : "secondary"}
-                onClick={()=>{
-                  setType(ContentType.Youtube)
-                }}></Button>
+          {/* Input Fields */}
+          <div className="space-y-3">
+            <Input ref={titleRef} placeholder="Title" />
+            {type === ContentType.Document ? (
+              <textarea
+                ref={textRef}
+                placeholder="Write your note here..."
+                className="w-full h-36 p-3 border border-gray-300 rounded-lg resize-none shadow-inner focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            ) : (
+              <Input ref={linkRef} placeholder="Link" />
+            )}
+          </div>
 
-                <Button size="md" text="Twitter" variant={type===ContentType.Twitter ? "primary" : "secondary"}
-                onClick={()=>{
-                  setType(ContentType.Twitter)
-                }}></Button>
+          {/* Type Selector */}
+          <div className="mt-6">
+            <h3 className="text-center text-gray-600 font-medium mb-2">What Are You Adding?</h3>
+            <div className="flex flex-wrap gap-2 justify-center">
+              <Button
+                size="md"
+                text="Youtube"
+                variant={type === ContentType.Youtube ? "primary" : "secondary"}
+                onClick={() => setType(ContentType.Youtube)}
+              />
+              <Button
+                size="md"
+                text="Twitter"
+                variant={type === ContentType.Twitter ? "primary" : "secondary"}
+                onClick={() => setType(ContentType.Twitter)}
+              />
+              <Button
+                size="md"
+                text="Document"
+                variant={type === ContentType.Document ? "primary" : "secondary"}
+                onClick={() => setType(ContentType.Document)}
+              />
+              <Button
+                size="md"
+                text="Links"
+                variant={type === ContentType.Links ? "primary" : "secondary"}
+                onClick={() => setType(ContentType.Links)}
+              />
+            </div>
+          </div>
 
-                <Button size='md' text='Document' variant={type===ContentType.Document ? "primary" : "secondary"} 
-                onClick={()=>{
-                  setType(ContentType.Document)
-                }}></Button>
-                </div>
-                <Button size='md' text='Links' variant={type===ContentType.Links ? "primary" : "secondary"}
-                onClick={()=>{
-                  setType(ContentType.Links)
-                }}></Button>
-              </div>
-              <div className="flex justify-center">
-              <Button onClick={addContent} variant="primary" text="Submit" size="md"/>
-              </div>
-            </span>
+          {/* Submit */}
+          <div className="mt-6 flex justify-center">
+            <Button onClick={addContent} variant="primary" text="Submit" size="md" />
           </div>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+  </div>
+);
 }
-
-
-
