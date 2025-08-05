@@ -28,6 +28,7 @@ app.post("/api/v1/signup", async (req: Request, res: Response) => {
   try{
       const signupSchema = z.object({
       username:z.string().min(3).max(20),
+      email: z.string().email(),
       password:z.string().min(4).max(100)
     })
     const validation = signupSchema.safeParse(req.body);
@@ -37,12 +38,13 @@ app.post("/api/v1/signup", async (req: Request, res: Response) => {
         errors:validation.error
       });
     }
-    const {username,password}=validation.data;
+    const {username,email,password}=validation.data;
     let errorThrown=false;
     const hashedPassword=await bcrypt.hash(password,5);
     
     await UserModel.create({
         username:username,
+        email:email,
         password:hashedPassword,
     });
     res.json({
@@ -57,10 +59,10 @@ app.post("/api/v1/signup", async (req: Request, res: Response) => {
 
 app.post("/api/v1/signin",async (req, res) => {
     try {
-    const username=req.body.username;
+    const email=req.body.email;
     const password=req.body.password;
     const existingUser=await UserModel.findOne({
-      username
+      email
     });
     if(!existingUser){
       res.status(403).json({
