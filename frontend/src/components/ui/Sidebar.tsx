@@ -5,14 +5,19 @@ import { Document } from "../../icons/Document";
 import { SidebarItem } from "./SidebarItem";
 import { LinkIcon } from "../../icons/LinkIcon";
 
+
+
 interface SidebarProps {
   selectedType: "twitter" | "youtube" | "document" | "links";
   onSelectType: (type: "twitter" | "youtube" | "document" | "links") => void;
+ 
 }
 
 
 export function Sidebar({ selectedType, onSelectType }: SidebarProps) {
+  
   return (
+    
     <div className="h-screen bg-white w-72 fixed left-0 top-0 pl-4">
       <div className="flex text-2xl  pl-8 items-center pt-6">
         <div className="flex justify-center mb-4">
@@ -50,5 +55,7 @@ export function Sidebar({ selectedType, onSelectType }: SidebarProps) {
         
       </div>
     </div>
+    
+    
   );
 }
