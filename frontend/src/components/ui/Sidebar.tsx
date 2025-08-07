@@ -60,7 +60,7 @@ export function Sidebar({ selectedType, onSelectType, user }: SidebarProps) {
         
       </div>
       {user && (
-      <div className="absolute bottom-6 left-4 right-4 bg-gray-100 p-4 rounded-lg shadow-md">
+      <div className="absolute  bottom-1 left-0 w-full  bg-gray-100 p-4 rounded-lg shadow-md">
         <div className="flex items-center">
             <div className="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center text-lg font-semibold text-white mr-2 mt-2">{user.username[0].toUpperCase()}</div>
             <div>
