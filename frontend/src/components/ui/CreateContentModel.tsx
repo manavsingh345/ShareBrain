@@ -8,6 +8,7 @@ import { YoutubeIcon } from '../../icons/YoutubeIcon.tsx';
 import { TwitterIcon } from '../../icons/TwitterIcon.tsx';
 import { Document } from '../../icons/Document.tsx';
 import { LinkIcon } from '../../icons/LinkIcon.tsx';
+import { SubmitIcon } from '../../icons/SubmitIcon.tsx';
 
 enum ContentType {
   Youtube = "youtube",
@@ -54,13 +55,17 @@ export function CreateContentModel({ open, onClose }: any) {
         <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6">
           {/* Close Button */}
           <div className="flex justify-end">
-            <button onClick={onClose} className="text-gray-500 hover:text-red-500 transition">
+            <button onClick={onClose} className="text-gray-500 cursor-pointer">
               <CrossIcon />
             </button>
           </div>
 
           {/* Header */}
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">Craft Your Content Here</h2>
+        <h2 className="text-3xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-center tracking-tight">
+                Craft Your Content Here
+        </h2>
+
+
 
           {/* Input Fields */}
           <div className="space-y-3">
@@ -78,7 +83,7 @@ export function CreateContentModel({ open, onClose }: any) {
 
           {/* Type Selector */}
           <div className="mt-6">
-            <h3 className="text-center text-gray-600 font-medium mb-2">What Are You Adding?</h3>
+            <h3 className="text-center font-serif text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-fuchsia-500 font-medium mb-2">What Are You Adding?</h3>
             <div className="flex justify-between gap-2">
               <Button
                 size="md"
@@ -113,7 +118,7 @@ export function CreateContentModel({ open, onClose }: any) {
 
           {/* Submit */}
           <div className="mt-6 flex justify-center">
-            <Button onClick={addContent} variant="primary" text="Submit" size="md" />
+            <Button onClick={addContent} variant="primary" text="Craft" size="md" startIcon={<SubmitIcon/>}/>
           </div>
         </div>
       </div>
