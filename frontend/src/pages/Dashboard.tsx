@@ -9,6 +9,9 @@ import axios from 'axios';
 import { BACKEND_URL } from '../config';
 import Microlink from '@microlink/react';
 
+const raw = localStorage.getItem("user");
+const user = raw ? JSON.parse(raw) : undefined;
+
 export function Dashboard() {
   const [modelOpen, setModelOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState<Content | null>(null);
@@ -65,7 +68,8 @@ export function Dashboard() {
 
   return (
     <div>
-      <Sidebar selectedType={selectedType} onSelectType={setSelectedType} />
+      <Sidebar selectedType={selectedType} onSelectType={setSelectedType} user={user} />
+      
       <div className="p-4 ml-72 min-h-screen bg-gray-100">
         <CreateContentModel
           open={modelOpen}

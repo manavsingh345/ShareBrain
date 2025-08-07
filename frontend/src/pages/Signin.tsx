@@ -19,6 +19,11 @@ export  function Signin(){
         })
         const jwt=response.data.token;
         localStorage.setItem("token",jwt);
+        localStorage.setItem("user", JSON.stringify({
+            username: response.data.username,
+            email: response.data.email
+        }));
+
         navigate("/dashboard");
     }
      return (
