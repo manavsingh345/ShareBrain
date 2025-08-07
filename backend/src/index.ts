@@ -42,13 +42,15 @@ app.post("/api/v1/signup", async (req: Request, res: Response) => {
     let errorThrown=false;
     const hashedPassword=await bcrypt.hash(password,5);
     
-    await UserModel.create({
+    const newUser=await UserModel.create({
         username:username,
         email:email,
         password:hashedPassword,
     });
     res.json({
-        message:"User is signed up"
+      message: "User is signed up",
+      username: newUser.username,
+      email: newUser.email
     });
   }catch(e){
     res.status(411).json({
@@ -79,9 +81,13 @@ app.post("/api/v1/signin",async (req, res) => {
       const token=jwt.sign({
         id:existingUser._id.toString()
       },JWT_PASSWORD);
+
       res.json({
-        token:token
-      })
+      token: token,
+      username: existingUser.username,
+      email: existingUser.email
+      });
+
     }else{
       res.status(403).json({
         message:"Invalid"
