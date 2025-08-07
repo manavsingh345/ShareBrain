@@ -24,7 +24,7 @@ export function Dashboard() {
   }
 
   const [contents, setContents] = useState<Content[]>([]);
-  const [selectedType, setSelectedType] = useState<"twitter" | "youtube" | "document" | "links">("twitter");
+  const [selectedType, setSelectedType] = useState<"twitter" | "youtube" | "document" | "links">("youtube");
 
   useEffect(() => {
     fetchContents();
