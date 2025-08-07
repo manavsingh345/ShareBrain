@@ -4,6 +4,10 @@ import { Button } from './Button.tsx';
 import { Input } from './Input.tsx';
 import axios from 'axios';
 import { BACKEND_URL } from '../../config.ts';
+import { YoutubeIcon } from '../../icons/YoutubeIcon.tsx';
+import { TwitterIcon } from '../../icons/TwitterIcon.tsx';
+import { Document } from '../../icons/Document.tsx';
+import { LinkIcon } from '../../icons/LinkIcon.tsx';
 
 enum ContentType {
   Youtube = "youtube",
@@ -75,28 +79,32 @@ export function CreateContentModel({ open, onClose }: any) {
           {/* Type Selector */}
           <div className="mt-6">
             <h3 className="text-center text-gray-600 font-medium mb-2">What Are You Adding?</h3>
-            <div className="flex flex-wrap gap-2 justify-center">
+            <div className="flex justify-between gap-2">
               <Button
                 size="md"
                 text="Youtube"
+                startIcon={<YoutubeIcon/>}
                 variant={type === ContentType.Youtube ? "primary" : "secondary"}
                 onClick={() => setType(ContentType.Youtube)}
               />
               <Button
                 size="md"
                 text="Twitter"
+                startIcon={<TwitterIcon/>}
                 variant={type === ContentType.Twitter ? "primary" : "secondary"}
                 onClick={() => setType(ContentType.Twitter)}
               />
               <Button
                 size="md"
                 text="Document"
+                startIcon={<Document/>}
                 variant={type === ContentType.Document ? "primary" : "secondary"}
                 onClick={() => setType(ContentType.Document)}
               />
               <Button
                 size="md"
                 text="Links"
+                startIcon={<LinkIcon/>}
                 variant={type === ContentType.Links ? "primary" : "secondary"}
                 onClick={() => setType(ContentType.Links)}
               />
