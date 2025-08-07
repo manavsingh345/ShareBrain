@@ -4,18 +4,22 @@ import { YoutubeIcon } from "../../icons/YoutubeIcon";
 import { Document } from "../../icons/Document";
 import { SidebarItem } from "./SidebarItem";
 import { LinkIcon } from "../../icons/LinkIcon";
+import { useNavigate } from "react-router-dom";
 
 
 
 interface SidebarProps {
   selectedType: "twitter" | "youtube" | "document" | "links";
   onSelectType: (type: "twitter" | "youtube" | "document" | "links") => void;
- 
+  user?:{
+    username:String,
+    email:String
+  };
 }
 
 
-export function Sidebar({ selectedType, onSelectType }: SidebarProps) {
-  
+export function Sidebar({ selectedType, onSelectType, user }: SidebarProps) {
+    const navigate =useNavigate();
   return (
     
     <div className="h-screen bg-white w-72 fixed left-0 top-0 pl-4">
@@ -52,8 +56,30 @@ export function Sidebar({ selectedType, onSelectType }: SidebarProps) {
           selected={selectedType === "document"}
           onClick={() => onSelectType("document")}
         />
+
         
       </div>
+      {user && (
+      <div className="absolute bottom-6 left-4 right-4 bg-gray-100 p-4 rounded-lg shadow-md">
+        <div className="flex items-center">
+            <div className="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center text-lg font-semibold text-white mr-2 mt-2">{user.username[0].toUpperCase()}</div>
+            <div>
+            <h3 className="text-sm font-semibold">{user.username}</h3>
+            <p className="text-xs text-gray-600">{user.email}</p>
+            </div>
+        </div>
+        <div></div>
+      <button
+              className="text-xs text-blue-600 mt-2 underline cursor-pointer ml-12"
+              onClick={() => {
+              localStorage.removeItem("user");
+              navigate("/signin");
+      }}>
+      Logout
+    </button>
+  </div>
+)}
+
     </div>
     
     
