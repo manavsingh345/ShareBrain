@@ -62,15 +62,15 @@ export function Sidebar({ selectedType, onSelectType, user }: SidebarProps) {
       {user && (
       <div className="absolute  bottom-1 left-0 w-full  bg-gray-100 p-4 rounded-lg shadow-md">
         <div className="flex items-center">
-            <div className="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center text-lg font-semibold text-white mr-2 mt-2">{user.username[0].toUpperCase()}</div>
+            <div className="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center text-lg font-semibold text-white mr-2 mt-2 font-serif">{user.username[0].toUpperCase()}</div>
             <div>
-            <h3 className="text-sm font-semibold">{user.username}</h3>
-            <p className="text-xs text-gray-600">{user.email}</p>
+            <h3 className="text-sm font-semibold font-serif">{user.username}</h3>
+            <p className="text-xs text-gray-600 font-serif">{user.email}</p>
             </div>
         </div>
         <div></div>
       <button
-              className="text-xs text-blue-600 mt-2 underline cursor-pointer ml-12"
+              className="text-xs text-blue-600 mt-2 underline cursor-pointer ml-12 font-serif"
               onClick={() => {
               localStorage.removeItem("user");
               navigate("/signin");
