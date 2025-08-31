@@ -8,6 +8,7 @@ import {ContentModel, UserModel,LinkModel} from "./db";
 import {JWT_PASSWORD} from "./config";
 import {authMiddleware} from "./middleware";
 import { random } from "./utils";
+import generateOpenAiResponse from "./openai";
 const app=express();
 app.use(express.json());
 
@@ -245,6 +246,18 @@ app.get("/api/v1/brain/:shareLink", async (req, res) => {
     res.status(500).json({ message: "Failed to fetch shared brain" });
   }
 }); 
+
+app.post("/api/v1/chat", async(req,res)=>{
+    const {message} =req.body;
+    
+    try{
+      const assiantReply= await generateOpenAiResponse(message);
+      console.log(assiantReply);
+      res.json({reply:assiantReply});
+    }catch(e){
+      res.status(500).json({message:"Error will sending message"});
+    }
+});
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
