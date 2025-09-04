@@ -1,9 +1,10 @@
 .chat {
-    height: 400px;
-    width: 400px;
-    background-color: rgb(219, 137, 151);
-    position: fixed;  
-    bottom: 10px;        
-    right: 0;         
-    z-index: 10;       
+  height: 400px;
+  width: 400px;
+  background-color: rgb(219, 137, 151);
+  position: fixed;
+  bottom: 10px;
+  right: 0;
+  z-index: 10;
+
 }
