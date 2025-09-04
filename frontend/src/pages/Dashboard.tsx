@@ -8,7 +8,7 @@ import { Sidebar } from '../components/ui/Sidebar';
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
 import Microlink from '@microlink/react';
-
+import ChatBot from './ChatBot';
 const raw = localStorage.getItem("user");
 const user = raw ? JSON.parse(raw) : undefined;
 
@@ -125,7 +125,7 @@ export function Dashboard() {
             />
           ))}
         </div>
-
+          <ChatBot/>
         {/* Big card modal */}
         {selectedCard && (
           <div className="fixed inset-0 backdrop-blur-sm bg-transparent  flex items-center justify-center z-50">
