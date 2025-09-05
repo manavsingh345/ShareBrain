@@ -34,7 +34,7 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background-image: conic-gradient(from var(--angle),   #867f7f, #d2dad7, #d0e0f7, #f4d1e5,   #968d8d);
+  background-image: conic-gradient(from var(--angle),   #cdc6c6, #d2dad7, #d0e0f7, #f4d1e5,   #c9c1c1);
   border-radius: 12px; /* Slightly larger to account for the border */
   z-index: -1;
   animation: 3s spin linear infinite;
@@ -48,7 +48,7 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background-image: conic-gradient(from var(--angle),   #a79e9e, #8c928f, #b2c3da, #e4a0c8, #eb9696);
+  background-image: conic-gradient(from var(--angle),   #d5cbcb, #8c928f, #b2c3da, #e4a0c8, #eb9696);
   border-radius: 12px;
   z-index: -2;
   filter: blur(10px);
