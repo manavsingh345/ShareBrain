@@ -51,7 +51,7 @@ export default function ChatBot({onClose}: ChatBotProps){
             <div className="messagesDiv flex-1 overflow-y-auto p-4 flex flex-col">
                 {
                     chats.map((chat,idx)=>(
-                        <p  key={idx} className={`p-2 rounded-lg max-w-[80%] ${chat.sender === "user" ? "bg-blue-400 self-end" : "bg-gray-100 self-start" }`}>{chat.text}</p>
+                        <p  key={idx} className={`p-2 rounded-lg max-w-[80%] ${chat.sender === "user" ? "bg-blue-400 self-end" : "bg-gray-200 self-start" }`}>{chat.text}</p>
                     ))
                 } 
         </div>
