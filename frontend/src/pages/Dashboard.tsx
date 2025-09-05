@@ -9,6 +9,7 @@ import axios from 'axios';
 import { BACKEND_URL } from '../config';
 import Microlink from '@microlink/react';
 import ChatBot from './ChatBot';
+import BotButton from './BotButton';
 const raw = localStorage.getItem("user");
 const user = raw ? JSON.parse(raw) : undefined;
 
@@ -25,6 +26,7 @@ export function Dashboard() {
 
   const [contents, setContents] = useState<Content[]>([]);
   const [selectedType, setSelectedType] = useState<"twitter" | "youtube" | "document" | "links">("youtube");
+  const [isChatOpen,setisChatOpen]=useState(true);
 
   useEffect(() => {
     fetchContents();
@@ -125,7 +127,9 @@ export function Dashboard() {
             />
           ))}
         </div>
-          <ChatBot/>
+          {isChatOpen && <ChatBot onClose={() => setisChatOpen(false)}/>}
+          {!isChatOpen && <BotButton onClick={()=>setisChatOpen(true)}/>}
+          
         {/* Big card modal */}
         {selectedCard && (
           <div className="fixed inset-0 backdrop-blur-sm bg-transparent  flex items-center justify-center z-50">
