@@ -1,9 +1,26 @@
+import HeroText from "./HeroText";
+import Info from "./Info";
 import Navbar from "./Navbar";
+
 
 export default function Dash(){
     return (
-        <div>
+        <div className="bg-gradient-to-b from-white via-indigo-100 to-violet-600  min-h-screen">
+        <div className="relative z-70 pt-10">
             <Navbar/>
+        </div>
+        <div className="flex ">
+            <div className="w-1/2 left-0 flex flex-col py-30">
+                <HeroText/>
+                <Info/>
+                
+            </div>
+            <div>
+                2
+            </div>
+        
+        </div>
+
         </div>
     )
 }
