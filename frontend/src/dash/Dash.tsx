@@ -1,6 +1,7 @@
 import HeroText from "./HeroText";
 import Info from "./Info";
 import Navbar from "./Navbar";
+import SecondBrainOrbit from "./Orbit";
 
 
 export default function Dash(){
@@ -15,8 +16,8 @@ export default function Dash(){
                 <Info/>
                 
             </div>
-            <div>
-                2
+            <div className="mx-auto py-15">
+                <SecondBrainOrbit/>
             </div>
         
         </div>
