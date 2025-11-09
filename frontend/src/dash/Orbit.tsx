@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Youtube, Github, Twitter, Linkedin } from "lucide-react";
+import Brain from "./Brain";
 
 export default function SecondBrainOrbit() {
   const icons = [
@@ -11,7 +12,17 @@ export default function SecondBrainOrbit() {
 
   return (
     <div className="relative flex items-center justify-center h-[400px]">
-      {/* Outer Circle */}
+       <motion.div
+            animate={{ rotate: [-10, 10, -10] }} // tilts left (-10°) then right (10°)
+            transition={{
+                repeat: Infinity, 
+                repeatType: "mirror", 
+                duration: 3, 
+                ease: "easeInOut", 
+            }}
+        ><Brain/></motion.div>
+
+      
       <motion.div
         className="absolute border border-indigo-500/20 rounded-full"
         style={{
