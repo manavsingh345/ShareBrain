@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
-import { Youtube, Github, Twitter, Linkedin } from "lucide-react";
+import { Youtube, Github, Twitter, Linkedin,Link } from "lucide-react";
 import Brain from "./Brain";
 
 export default function SecondBrainOrbit() {
   const icons = [
     { icon: <Youtube className="text-red-400 w-6 h-6" />, angle: 0 },
-    { icon: <Github className="text-purple-400 w-6 h-6" />, angle: 90 },
-    { icon: <Twitter className="text-cyan-400 w-6 h-6" />, angle: 180 },
-    { icon: <Linkedin className="text-cyan-400 w-6 h-6" />, angle: 270 },
+    { icon: <Github className="text-purple-400 w-6 h-6" />, angle: 72 },
+    { icon: <Twitter className="text-cyan-400 w-6 h-6" />, angle: 144 },
+    { icon: <Linkedin className="text-cyan-400 w-6 h-6" />, angle: 216 },
+    { icon: <Link className="text-cyan-400 w-6 h-6" />, angle: 288 },
   ];
 
   return (
