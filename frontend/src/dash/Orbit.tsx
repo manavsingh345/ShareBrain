@@ -21,7 +21,7 @@ export default function SecondBrainOrbit() {
                 duration: 3, 
                 ease: "easeInOut", 
             }}
-        ><Brain/></motion.div>
+        ><Brain width={80} height={160}/></motion.div>
 
       
       <motion.div

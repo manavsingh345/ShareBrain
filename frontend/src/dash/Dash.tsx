@@ -11,7 +11,7 @@ export default function Dash(){
             <Navbar/>
         </div>
         <div className="flex ">
-            <div className="w-1/2 left-0 flex flex-col py-30">
+            <div className="w-1/2 left-0 flex flex-col py-18">
                 <HeroText/>
                 <Info/>
                 
