@@ -3,7 +3,7 @@ import Message from "../components/ui/Message"
 import SmallNav from "./SmallNav"
 export default function MultiCard(){
     return(
-        <div className="pt-15 bg-black   min-h-screen">
+        <div className="pt-15 bg-black   min-h-screen ">
            <div className="flex justify-center items-center"><SmallNav text={"Experience  Powerful Features"}/></div>
            <div className="flex justify-center items-center text-3xl font-bold text-white py-4 ">
             Everything You Need to <br />
