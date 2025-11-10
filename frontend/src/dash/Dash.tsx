@@ -1,12 +1,15 @@
+
 import HeroText from "./HeroText";
 import Info from "./Info";
+import MultiCard from "./MultiCard";
 import Navbar from "./Navbar";
 import SecondBrainOrbit from "./Orbit";
 
 
 export default function Dash(){
     return (
-        <div className="bg-gradient-to-b from-white via-indigo-100 to-violet-600  min-h-screen">
+        <div>
+        <div className="bg-gradient-to-b from-violet-900 via-indigo-300 to-black min-h-screen">
         <div className="relative z-70 pt-10">
             <Navbar/>
         </div>
@@ -19,9 +22,11 @@ export default function Dash(){
             <div className="mx-auto py-15">
                 <SecondBrainOrbit/>
             </div>
-        
-        </div>
 
+        </div>
+            
+        </div>
+        <MultiCard/>
         </div>
     )
 }

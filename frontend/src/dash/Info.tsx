@@ -1,7 +1,7 @@
 import Button from "./Button"
 export default function Info(){
     return (
-        <div className="text-lg pt-6 mx-auto pl-51">
+        <div className="text-lg pt-6 mx-auto pl-51 text-white">
         Effortlessly <span className="font-bold">chat with your documents, TikToks, IG Reels, YouTube videos, LinkedIn, X, Audio, Looms, PDFs, websites</span>, and more—summarize, search, and interact with your content.
         <br />
         <br />

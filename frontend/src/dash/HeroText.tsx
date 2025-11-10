@@ -14,7 +14,7 @@ export default function HeroText() {
 
   return (
     <div className="text-5xl font-bold mx-auto text-white  drop-shadow-[0_2px_2px_rgba(0,0,0,1)]">
-      <SmallNav/>
+      <SmallNav text={"Turn Days of Work into Minutes"} />
       Build your 100x{" "}
       <span key={index} className="inline-block pl-4 text-violet-300 transition-all duration-600 absolute animate-fadeIn">
           {words[index]}
