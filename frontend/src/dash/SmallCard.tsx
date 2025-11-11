@@ -1,4 +1,10 @@
+import { YoutubeIcon } from "../icons/YoutubeIcon";
+import { Document } from "../icons/Document";
 import LogoCard from "./LogoCard";
+import WebsiteIcon from "../icons/WebsiteIcon";
+import AudioIcon from "../icons/AudioIcon";
+import GithubIcon from "../icons/GithubIcon";
+import LinkedinIcon from "../icons/LinkedinIcon";
 
 export default function SmallCard() {
   return (
@@ -12,17 +18,17 @@ export default function SmallCard() {
         
       
         <div className="flex justify-center flex-wrap gap-1">
-          <LogoCard text={"YouTube, TikTok, IG Reels"} />
-          <LogoCard text={"PDFs & Documents"} />
-          <LogoCard text={"Websites & Articles"} />
+          <LogoCard icon={<YoutubeIcon/>} text={"YouTube, TikTok, IG Reels"} />
+          <LogoCard icon={<Document/>} text={"PDFs & Documents"} />
+          <LogoCard icon={<WebsiteIcon/>}text={"Websites & Articles"} />
         </div>
 
         
         <div className="flex justify-center flex-wrap gap-1">
-          <LogoCard text={"Audio & Podcasts"} />
-          <LogoCard text={"Code & GitHub Repos"} />
-          <LogoCard text={"Google Docs/Sheets/Slides"} />
-          <LogoCard text={"LinkedIn Posts, Carousels, Videos"} />
+          <LogoCard icon={<AudioIcon/>} text={"Audio & Podcasts"} />
+          <LogoCard icon={<GithubIcon/>} text={"Code & GitHub Repos"} />
+          <LogoCard icon={<Document/>} text={"Google Docs/Sheets/Slides"} />
+          <LogoCard icon={<LinkedinIcon/>} text={"LinkedIn Posts, Carousels, Videos"} />
         </div>
       </div>
     </div>
