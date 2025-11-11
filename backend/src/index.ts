@@ -13,10 +13,10 @@ const app=express();
 app.use(express.json());
 
 mongoose.connect("mongodb+srv://admin:2oHbAW7FWPiQS7zZ@cluster0.ow5iono.mongodb.net/secondbrain?retryWrites=true&w=majority&appName=Cluster0").then(() => {
-    console.log("✅ MongoDB connected");
+    console.log("MongoDB connected");
   })
   .catch((err) => {
-    console.error("❌ MongoDB connection error:", err);
+    console.error(" MongoDB connection error:", err);
   });
 
 app.use(cors({
