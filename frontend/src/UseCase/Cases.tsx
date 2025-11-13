@@ -8,7 +8,7 @@ import MarketIcon from "../icons/MarketIcon";
 import CopyIcon from "../icons/CopyIcon";
 import UseCard from "./UseCard";
 import { useState } from "react";
-import SubCard from "./SubCard";
+
 
 export default function Cases(){
     const [selected,setSelected]=useState<String>("energy");
