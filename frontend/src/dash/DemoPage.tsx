@@ -4,7 +4,7 @@ import VisualPage from "./VisualPage";
 export default function DemoPage(){
     return (
         <div className="bg-black min-h-screen">
-            <div className="flex flex-col items-center pt-60 pb-20">
+            <div className="flex flex-col items-center pt-60 pb-10">
                 <SmallNav text={"Experience  Powerful Features"}/>
                 <span className="text-white text-4xl sm:text-4xl font-bold">Check out a short demo of the</span>
                 <br />

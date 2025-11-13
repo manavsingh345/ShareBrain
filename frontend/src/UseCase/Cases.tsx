@@ -9,7 +9,6 @@ import CopyIcon from "../icons/CopyIcon";
 import UseCard from "./UseCard";
 import { useState } from "react";
 
-
 export default function Cases(){
     const [selected,setSelected]=useState<String>("energy");
 
@@ -34,7 +33,7 @@ export default function Cases(){
   <div className="h-3/6 w-4/7 bg-[#101428] flex  rounded-2xl">
 
 
-   {selected === "energy" && <UseCard icon={<EnergyIcon height="60" width="60"/>} heading="Productivity Enthusiasts" subheading="Maximize your productivity and never lose a great idea again." type="energy" subItems={["Capture ideas instantly with side panel","Multi-source AI chat","Chrome extension for quick saves",
+   {selected === "energy"  && <UseCard icon={<EnergyIcon height="60" width="60"/>} heading="Productivity Enthusiasts" subheading="Maximize your productivity and never lose a great idea again." type="energy" subItems={["Capture ideas instantly with side panel","Multi-source AI chat","Chrome extension for quick saves",
     "Auto-organized knowledge base","Smart tags and projects","Searchable virtual memory"
     ]}/>}
 
