@@ -7,8 +7,8 @@ export default function TimeData(){
     return (
         <div className="bg-black min-h-screen ">
         <div className="flex justify-center py-30 gap-10">
-            <Card2 heading="5 hours" text="Without SecondBrain"/>
-            <Card2 heading="5 mins" text="With SecondBrain"/>
+            <Card2 color="text-red-500" heading="5 hours" text="Without SecondBrain"/>
+            <Card2 color="text-green-500" heading="5 mins" text="With SecondBrain"/>
             <Card2 heading="100+" text="Happy Users"/>
         </div>
         <div className="flex justify-center">
