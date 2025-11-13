@@ -1,4 +1,4 @@
-
+import Cases from "../UseCase/Cases";
 import HeroText from "./HeroText";
 import Info from "./Info";
 import MultiCard from "./MultiCard";
@@ -27,6 +27,7 @@ export default function Dash(){
             
         </div>
         <MultiCard/>
+        <Cases/> 
         </div>
     )
 }

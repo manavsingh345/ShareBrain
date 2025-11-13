@@ -1,12 +1,18 @@
-export default function Button(){
+import type { ReactElement } from "react"
+
+interface ButtonProps{
+    text?:string,
+    height?:string,
+    width?:string,
+    color?:string,
+    icon?:ReactElement
+}
+
+export default function Button(props:ButtonProps){
     return (
-        <div className="flex mt-4">
-        <div className="h-15 w-40 bg-violet-500 px-7 flex text-white items-center border-none rounded-2xl mt-4 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg">
-            Start Now <i className="fa-solid fa-arrow-right text-white pl-2 pt-1"></i>
-        </div>
-        <div className="h-15 w-45 ml-3 bg-gray-600 text-white px-6 flex items-center border-none rounded-2xl mt-4 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg">
-           <i className="fa-solid fa-play pr-2 pt-1"></i>  Watch Demo
-        </div>
+        <div className="mt-4 px-4 flex items-center text-white  border-none rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg" style={{height:props.height || "65px" , width:props.width || "160px", backgroundColor:props.color || "#8B5CF6" }}> 
+        <span className="text-xl font-semibold flex pl-1">{props.text}</span>
+        <span className="text-xl font-semibold flex ">{props.icon}</span>
         </div>
     )
 }

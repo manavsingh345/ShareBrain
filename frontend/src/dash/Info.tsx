@@ -6,7 +6,11 @@ export default function Info(){
         <br />
         <br />
         <span className="font-bold">Save anything to your Second Brain</span>—then <span className="font-bold">AI chat with your auto-organized knowledge base</span> using state-of-the-art models like Claude 4, Grok 3, DeepSeek R1, GPT-4.1 and more
-        <Button/>
+        <div className="flex">
+        <Button text="Start Now" icon={<i className="fa-solid fa-arrow-right text-white pl-2"></i>}/>
+        <span className="mr-4"></span>
+        <Button text="Watch Demo" width="190px" icon={<i className="fa-solid fa-play pl-2 pt-1"></i>} color="#101428"/>
+        </div>
       </div>
     )
 }

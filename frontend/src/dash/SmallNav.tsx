@@ -1,7 +1,6 @@
 import Brain from "./Brain"
 interface Text{
     text:String,
-
 }
 export default function SmallNav(props:Text){
     return (
