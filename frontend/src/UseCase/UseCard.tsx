@@ -7,6 +7,7 @@ interface UseContent{
     subheading:string,
     subcard?:ReactElement,
     type?:String,
+    subItems?: string[],
 }
 
 export default function UseCard(props:UseContent){
@@ -19,7 +20,7 @@ export default function UseCard(props:UseContent){
             <span className="text-lg text-gray-400">{props.subheading}</span>
         </div>    
     </div>
-        <SubCard/>
+        {props.subItems && <SubCard items={props.subItems} />}
     </div>
     )
 }

@@ -1,21 +1,29 @@
 import UseSmall from "./UseSmall";
 
-export default function SubCard(){
-    return (
-        <div className="flex px-12 ">
+interface SubProps {
+  items: string[];
+}
 
-            <div className="flex flex-col gap-4 flex-wrap mr-6">
-                <UseSmall text="Capture ideas instantly with side panel"/>
-                <UseSmall text="Multi-source AI chat"/>
-                <UseSmall text="Chrome extension for quick saves"/>
-            </div>
+export default function SubCard({ items }: SubProps) {
+  // Split items into 2 columns
+  const firstCol = items.slice(0, 3);
+  const secondCol = items.slice(3, 6);
 
-            <div className="flex flex-col gap-4  flex-wrap ">
-                <UseSmall text="Auto-organized knowledge base"/>
-                <UseSmall text="Smart tags and projects"/>
-                <UseSmall text="Searchable virtual memory"/>
-            </div>
+  return (
+    <div className="flex px-12">
+      {/* Column 1 */}
+      <div className="flex flex-col gap-4 mr-6">
+        {firstCol.map((t, i) => (
+          <UseSmall key={i} text={t} />
+        ))}
+      </div>
 
-            </div>
-    )
+      {/* Column 2 */}
+      <div className="flex flex-col gap-4">
+        {secondCol.map((t, i) => (
+          <UseSmall key={i} text={t} />
+        ))}
+      </div>
+    </div>
+  );
 }

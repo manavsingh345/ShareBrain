@@ -8,6 +8,7 @@ import MarketIcon from "../icons/MarketIcon";
 import CopyIcon from "../icons/CopyIcon";
 import UseCard from "./UseCard";
 import { useState } from "react";
+import SubCard from "./SubCard";
 
 export default function Cases(){
     const [selected,setSelected]=useState<String>("energy");
@@ -31,12 +32,30 @@ export default function Cases(){
   </div>
 
   <div className="h-3/6 w-4/7 bg-[#101428] flex  rounded-2xl">
-   {selected === "energy" && <UseCard icon={<EnergyIcon height="60" width="60"/>} heading="Productivity Enthusiasts" subheading="Maximize your productivity and never lose a great idea again." type="energy"/>}
-   {selected === "creator" && <UseCard icon={<EnergyIcon height="60" width="60"/>} heading="Content Creators" subheading="Create better content faster with AI-powered insights." type="creator"/>}
-   {selected === "solo" && <UseCard icon={<EnergyIcon height="60" width="60"/>} heading="Solopreneurs" subheading="Build and grow your business with AI as your co-pilot." type="solo"/>}
-   {selected === "developer" && <UseCard icon={<EnergyIcon height="60" width="60"/>} heading="Developers" subheading="Code faster with AI-powered documentation and research." type="developer"/>}
-   {selected === "market" && <UseCard icon={<EnergyIcon height="60" width="60"/>} heading="Marketers" subheading="Plan campaigns and analyze content with AI assistance." type="market"/>}
-   {selected === "copy" && <UseCard icon={<EnergyIcon height="60" width="60"/>} heading="Copywriters" subheading="Write better, faster with AI that understands your voice." type="copy"/>}
+
+
+   {selected === "energy" && <UseCard icon={<EnergyIcon height="60" width="60"/>} heading="Productivity Enthusiasts" subheading="Maximize your productivity and never lose a great idea again." type="energy" subItems={["Capture ideas instantly with side panel","Multi-source AI chat","Chrome extension for quick saves",
+    "Auto-organized knowledge base","Smart tags and projects","Searchable virtual memory"
+    ]}/>}
+
+
+   {selected === "creator" && <UseCard icon={<EnergyIcon height="60" width="60"/>} heading="Content Creators" subheading="Create better content faster with AI-powered insights." type="creator" subItems={["Chat with YouTube videos and TikToks","AI copywriter that learns your style","Save research and inspiration",
+   "Extract key points from content","Humanize AI-generated text","Collaborate with AI on ideas"]}/>}
+
+
+   {selected === "solo" && <UseCard icon={<EnergyIcon height="60" width="60"/>} heading="Solopreneurs" subheading="Build and grow your business with AI as your co-pilot." type="solo" subItems={[ "Organize business knowledge","AI chat with documents and data","Project management with AI",
+    "Quick access to saved resources","Auto-tagged content library","Multi-language support"]}/>}
+
+
+   {selected === "developer" && <UseCard icon={<EnergyIcon height="60" width="60"/>} heading="Developers" subheading="Code faster with AI-powered documentation and research." type="developer" subItems={["Chat with GitHub repositories","Save code snippets instantly","Documentation at your fingertips",
+    "Multi-source code research","AI File Explorer","Technical knowledge base"]}/>}
+
+   {selected === "market" && <UseCard icon={<EnergyIcon height="60" width="60"/>} heading="Marketers" subheading="Plan campaigns and analyze content with AI assistance." type="market" subItems={["Analyze competitor content","Extract insights from videos","Campaign planning with AI",
+    "Content research library","Multi-platform content analysis","AI-powered copywriting"]}/>}
+
+
+   {selected === "copy" && <UseCard icon={<EnergyIcon height="60" width="60"/>} heading="Copywriters" subheading="Write better, faster with AI that understands your voice." type="copy" subItems={["AI copywriter learns your style","Humanize AI-generated text","Bypass AI detection tools",
+    "Research management","Save writing inspiration","Multi-language writing support"]}/>}
   </div>
 
 
