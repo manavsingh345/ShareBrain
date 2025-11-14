@@ -1,5 +1,6 @@
 import Information from "../Choose/Information";
 import Cases from "../UseCase/Cases";
+import Footer from "./Footer/Footer";
 import HeroText from "./HeroText";
 import Info from "./Info";
 import MultiCard from "./MultiCard";
@@ -10,7 +11,7 @@ import SecondBrainOrbit from "./Orbit";
 export default function Dash(){
     return (
         <div>
-        <div className="bg-gradient-to-b from-violet-900 via-indigo-300 to-black min-h-screen">
+        <div className="bg-black min-h-screen">
         <div className="relative z-70 pt-10">
             <Navbar/>
         </div>
@@ -30,6 +31,7 @@ export default function Dash(){
         <MultiCard/>
         <Cases/> 
         <Information/>
+        <Footer/>
         </div>
     )
 }

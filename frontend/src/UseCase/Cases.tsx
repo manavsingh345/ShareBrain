@@ -12,8 +12,10 @@ import { useState } from "react";
 export default function Cases(){
     const [selected,setSelected]=useState<String>("energy");
 
-    return(
+    return(<>
+       <div className="absolute bg-violet-600 opacity-50 blur-[160px] rounded-full w-[300px] h-[400px] z-0 right-0"></div>
       <div className="h-screen bg-black flex flex-col items-center justify-center">
+        
   <SmallNav text={"Experience Powerful Features"} />
   
   <div className="flex flex-col justify-center items-center mt-4">
@@ -59,6 +61,6 @@ export default function Cases(){
 
 
 </div>
-
+</>
     )
 }

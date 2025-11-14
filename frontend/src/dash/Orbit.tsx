@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Youtube, Github, Twitter, Linkedin,Link } from "lucide-react";
-import Brain from "./Brain";
+import BrainIcon from "../icons/BrainIcon";
 
 export default function SecondBrainOrbit() {
   const icons = [
@@ -12,7 +12,9 @@ export default function SecondBrainOrbit() {
   ];
 
   return (
+    
     <div className="relative flex items-center justify-center h-[400px]">
+      <div className="absolute bg-violet-600 opacity-50 blur-[160px] rounded-full w-[400px] h-[400px] z-0 flex justify-center items-center"></div>
        <motion.div
             animate={{ rotate: [-10, 10, -10] }} // tilts left (-10°) then right (10°)
             transition={{
@@ -21,7 +23,7 @@ export default function SecondBrainOrbit() {
                 duration: 3, 
                 ease: "easeInOut", 
             }}
-        ><Brain width={80} height={160}/></motion.div>
+        ><BrainIcon width={80} height={160} /></motion.div>
 
       
       <motion.div
@@ -85,5 +87,6 @@ export default function SecondBrainOrbit() {
       </motion.div>
 
     </div>
+    
   );
 }

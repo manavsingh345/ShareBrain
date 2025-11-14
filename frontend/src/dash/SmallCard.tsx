@@ -12,6 +12,7 @@ import TimeData from "./TimeData";
 export default function SmallCard() {
   return (
     <div className="bg-black min-h-screen">
+       <div className="absolute bg-violet-600 opacity-50 blur-[160px] rounded-full w-[200px] h-[400px] z-0"></div>
       <div className="flex justify-center items-center text-3xl font-bold text-white py-10 pt-20">
         Works with All Your Content
       </div>
