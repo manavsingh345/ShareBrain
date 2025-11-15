@@ -1,5 +1,5 @@
 import Card from "./Card"
-import Message from "../components/ui/Message"
+import Message from "../component/UI/Message"
 import SmallNav from "./SmallNav"
 import SmallCard from "./SmallCard"
 import BrainIcon from "../icons/BrainIcon"

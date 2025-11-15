@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
-import { Button } from "../components/ui/Button";
+import { Button } from "../component/UI/Button";
 import { Link } from "react-router-dom";
 
 export function Signup() {

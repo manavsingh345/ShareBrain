@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Button } from '../components/ui/Button';
+import { Button } from '../component/UI/Button';
 import { PlusIcon } from '../icons/PlusIcon';
 import { ShareIcon } from '../icons/ShareIcon';
-import { Card } from '../components/ui/Card';
-import { CreateContentModel } from '../components/ui/CreateContentModel';
-import { Sidebar } from '../components/ui/Sidebar';
+import { Card } from '../component/UI/Card';
+import { CreateContentModel } from '../component/UI/CreateContentModel';
+import { Sidebar } from '../component/UI/Sidebar';
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
 import Microlink from '@microlink/react';
 import ChatBot from './ChatBot';
 import BotButton from './BotButton';
+
+
 const raw = localStorage.getItem("user");
 const user = raw ? JSON.parse(raw) : undefined;
 
@@ -88,6 +90,7 @@ export function Dashboard() {
             text="Add content"
             size="md"
           />
+         
           <Button
             onClick={async () => {
               try {

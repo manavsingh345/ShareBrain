@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Button } from "../components/ui/Button";
+import { Button } from "../component/UI/Button";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { Link, useNavigate } from "react-router-dom";
