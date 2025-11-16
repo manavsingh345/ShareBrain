@@ -69,12 +69,14 @@ export function Dashboard() {
   }, [selectedCard]);
 
   const filteredContents = contents.filter(content => content.type === selectedType);
-
+  const [sidebaropen, setSidebaropen] = useState(false);
   return (
     <div>
-      <Sidebar selectedType={selectedType} onSelectType={setSelectedType} user={user} />
+      <div className="fixed top-0 left-0 h-screen w-10 bg-gray-100 z-0"></div>
+      <Sidebar selectedType={selectedType} onSelectType={setSelectedType} user={user} sidebaropen={sidebaropen} setSidebaropen={setSidebaropen} />
       
-      <div className="p-4 ml-72 min-h-screen bg-gray-100">
+      <div className={`p-4 min-h-screen bg-gray-100 transition-all duration-300 
+    ${sidebaropen ? "ml-72" : "ml-10 "}`}>
         <CreateContentModel
           open={modelOpen}
           onClose={() => {
