@@ -8,7 +8,7 @@ import { Sidebar } from '../component/UI/Sidebar';
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
 import Microlink from '@microlink/react';
-import ChatBot from './ChatBot';
+import DraggableChatBot from './Draggable';
 import BotButton from './BotButton';
 
 
@@ -132,9 +132,17 @@ export function Dashboard() {
             />
           ))}
         </div>
-          {isChatOpen && <ChatBot onClose={() => setisChatOpen(false)}/>}
+          {/* {isChatOpen && <ChatBot onClose={() => setisChatOpen(false)}/>}
           {!isChatOpen && <BotButton onClick={()=>setisChatOpen(true)}/>}
-          
+           */}
+         {isChatOpen && ( <DraggableChatBot onClose={() => setisChatOpen(false)} />)}
+
+    {!isChatOpen && ( <BotButton onClick={() => setisChatOpen(true)} />)}
+
+
+
+      
+
         {/* Big card modal */}
         {selectedCard && (
           <div className="fixed inset-0 backdrop-blur-sm bg-transparent  flex items-center justify-center z-50">
