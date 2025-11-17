@@ -1,75 +1,83 @@
-📘 SecondBrain — AI Visual Board & Knowledge Base
+SecondBrain – AI Visual Board & Knowledge Base
 
-SecondBrain is an AI-powered personal knowledge management system that helps users collect, organize, visualize, and interact with information from multiple sources in one unified workspace.
-Users can upload PDFs, YouTube videos, website links, tweets, documents, and notes — and instantly generate AI-powered insights using Retrieval-Augmented Generation (RAG).
+A modern AI-powered personal knowledge OS built with Next.js, LangChain, Qdrant, BullMQ, Redis, and Gemini Flash 2.5 Lite.
+SecondBrain lets you capture, organize, visualize, and chat with your knowledge — including PDFs, YouTube videos, tweets, website links, documents, and text notes — all in one unified and intelligent workspace.
 
-🚀 Features
-🔹 AI Visual Board (Interactive Workspace)
+🚀 Live Demo
 
-Drag-and-drop nodes
+Coming Soon…
 
-Create and link knowledge blocks
+🧩 Features
+🗃️ Multi-Source Knowledge Ingestion
 
-Manage custom pages visually
+Supports uploading and processing:
 
-Real-time context-aware AI suggestions
+📄 PDFs
 
-🔹 Multi-Source Content Ingestion
+🔗 Website URLs
 
-PDF uploads
+🎥 YouTube videos (auto transcript extraction)
 
-YouTube video transcript extraction
+🐦 Tweets / X posts
 
-Website scraping
+📝 Plain text & document files
 
-Tweets / X text
+All content is cleaned, chunked, embedded, and stored automatically.
 
-Plain text & documents
+🧬 AI-Powered Semantic Search
 
-All stored as structured knowledge blocks
+Powered by:
 
-🔹 Vector Search & AI Retrieval
+Qdrant (Vector DB)
 
-Qdrant Vector DB (Dockerized)
+LangChain pipelines
 
-LangChain text-chunking pipeline
+Gemini Flash 2.5 Lite embeddings
 
-Embeddings generated using Gemini Flash 2.5 Lite
+This enables fast, accurate, context-aware search across all stored knowledge.
 
-Fast and accurate semantic search
+⚙️ Scalable Background Job System
 
-🔹 Scalable Background Job System
+Using BullMQ + Redis:
 
-BullMQ + Redis for queue processing
+🔄 Text extraction
 
-Background workers for:
+📝 Chunking
 
-Text extraction
+🧩 Embedding generation
 
-Transcription
+🎙️ Transcription (for YouTube inputs)
 
-Content chunking
+Workers run independently for high throughput and zero lag.
 
-Embedding generation
+🗺️ AI Visual Board
 
-Improves reliability and performance
+A Notion-like AI canvas where users can:
 
-🔹 RAG Chat Interface
+🟦 Drag & drop visual nodes
 
-Chat with your own uploaded knowledge
+🔗 Link knowledge blocks
 
-Zero hallucination (answers only from your content)
+🗂️ Create multi-page workspaces
 
-Citation support for transparency
+✨ Get AI suggestions directly on the board
 
-🔹 Browser Extension (Optional)
+Built using React + React Flow.
 
-Save articles, posts, and links directly to SecondBrain
+🤖 RAG Chat Interface
 
-One-click knowledge capture
+Ask AI questions about your stored content:
 
-🛠️ Tech Stack
-Frontend
+Answers strictly from your uploads
+
+Zero hallucination
+
+Cited references from retrieved chunks
+
+Uses a full RAG (Retrieval-Augmented Generation) pipeline
+
+🏗️ Tech Stack
+🎨 Frontend
 
 Next.js
 
@@ -77,115 +85,34 @@ React.js
 
 Tailwind CSS
 
-React Flow (for visual board)
+React Flow (Visual Board)
 
-Backend
+🧠 AI & RAG Pipeline
+
+LangChain
+
+Gemini Flash 2.5 Lite
+
+Qdrant (Dockerized)
+
+Vector Embeddings + Semantic Search
+
+🛠️ Backend
 
 Node.js
 
 Express.js
 
-BullMQ (job queues)
+BullMQ
 
-Redis (worker store)
+Redis
 
-Docker (containerization)
+Docker Compose
 
-AI / LLM / RAG
+📡 APIs & Tools
 
-LangChain
+YouTube Transcript API
 
-Qdrant Vector DB
+Cheerio / Puppeteer (Web scraping)
 
-Gemini Flash 2.5 Lite (embeddings + LLM)
-
-Others
-
-YouTube Data API
-
-Web scrapers (Cheerio / Puppeteer)
-
-PDF parsers
-
-📂 Project Structure
-/backend
-  /routes
-  /controllers
-  /workers
-  /queues
-  /utils
-  docker-compose.yml
-
-/frontend
-  /components
-  /pages
-  /hooks
-  /context
-  /visual-board
-
-/extensions
-  /chrome-extension
-
-README.md
-
-⚙️ Installation & Setup
-1️⃣ Clone the repository
-git clone https://github.com/your-username/secondbrain.git
-cd secondbrain
-
-2️⃣ Start Qdrant + Redis using Docker
-docker-compose up -d
-
-3️⃣ Install backend dependencies
-cd backend
-npm install
-npm run dev
-
-4️⃣ Install frontend dependencies
-cd ../frontend
-npm install
-npm run dev
-
-🔄 How It Works
-
-User uploads a file or link
-
-A BullMQ job is created
-
-Worker extracts text → chunks → embeddings
-
-Embeddings are stored in Qdrant
-
-User interacts with Visual Board
-
-RAG Chat retrieves relevant chunks and generates responses
-
-📌 Key Highlights
-
-Fully containerized backend
-
-Real RAG pipeline with Gemini embeddings
-
-Scalable ingestion system
-
-Interactive AI-powered workspace
-
-MERN + LLM hybrid architecture
-
-🧪 Future Enhancements
-
-Audio ingestion (speech-to-text)
-
-Cross-page knowledge graph
-
-Multi-model support (Claude, GPT, Grok)
-
-Team collaboration & shared spaces
-
-🤝 Contributions
-
-Pull requests, issues, and suggestions are welcome!
-
-📜 License
-
-MIT License
+PDF Parsers
