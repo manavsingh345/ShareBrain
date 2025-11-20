@@ -4,13 +4,18 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import {z} from "zod";
 const cors = require('cors');
-import {ContentModel, UserModel,LinkModel} from "./db";
+import {ContentModel, UserModel,LinkModel} from "./models/db";
 import {JWT_PASSWORD} from "./config";
 import {authMiddleware} from "./middleware";
 import { random } from "./utils";
 import generateOpenAiResponse from "./openai";
 const app=express();
 app.use(express.json());
+import path from "path";
+import dotenv from "dotenv";
+
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
+
 
 mongoose.connect("mongodb+srv://admin:2oHbAW7FWPiQS7zZ@cluster0.ow5iono.mongodb.net/secondbrain?retryWrites=true&w=majority&appName=Cluster0").then(() => {
     console.log("MongoDB connected");

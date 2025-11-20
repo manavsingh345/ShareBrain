@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "tsc -b",
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "npm run build && npm run start"
+    "dev": "npm run build && nodemon dist/index.js" 
   },
   "keywords": [],
   "author": "",

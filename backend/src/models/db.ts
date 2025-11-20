@@ -1,13 +1,15 @@
 import { link } from "fs";
 import mongoose,{model,Schema, Types} from "mongoose";
 import { title } from "process";
+
+
 const UserSchema=new Schema({
     username:{type:String,unique:true},
     email: { type: String, required: true, unique: true },
     password:String
 });
 
-export const UserModel=model("User",UserSchema);
+
 
 const ContentSchema=new Schema({
     title:String,
@@ -22,6 +24,6 @@ const LinksSchema=new Schema({
     userId:{type:mongoose.Types.ObjectId,ref:'User',required:true,unique:true},
 
 })
+export const UserModel=model("User",UserSchema);
 export const LinkModel=model("Links",LinksSchema);
- 
 export const ContentModel=model("Content",ContentSchema);
