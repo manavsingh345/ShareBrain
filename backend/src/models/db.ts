@@ -25,5 +25,5 @@ const LinksSchema=new Schema({
 
 })
 export const UserModel=model("User",UserSchema);
-export const LinkModel=model("Links",LinksSchema);
+export const LinkModel=model("Link",LinksSchema);
 export const ContentModel=model("Content",ContentSchema);
