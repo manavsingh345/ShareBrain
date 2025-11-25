@@ -17,7 +17,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 
-mongoose.connect("mongodb+srv://admin:2oHbAW7FWPiQS7zZ@cluster0.ow5iono.mongodb.net/secondbrain?retryWrites=true&w=majority&appName=Cluster0").then(() => {
+mongoose.connect(process.env.MONGO_URL!).then(() => {
     console.log("MongoDB connected");
   })
   .catch((err) => {
