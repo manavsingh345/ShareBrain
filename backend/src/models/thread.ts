@@ -7,7 +7,7 @@ const MessageSchema=new Schema({
 });
 
 const ThreadSchema=new Schema({
-    threadId:{type:String,required:true,unique:true},
+    threadId:{type:String,required:true},
     title:{type:String,default:"New Chat By Default"},
     messages:[MessageSchema],
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },

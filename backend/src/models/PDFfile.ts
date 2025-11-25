@@ -4,6 +4,7 @@ const PdfSchema=new Schema({
     originalName:{type:String,required:true},
     path:{type:String,require:true},
     uploadedAt:{type:Date,default: Date.now},
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     embedded:{type:Boolean,require:true}
 })
 
