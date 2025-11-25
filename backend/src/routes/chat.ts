@@ -101,6 +101,7 @@ router.post('/upload/pdf',authMiddleware,upload.single('pdf'), async (req, res) 
       filename: cloudUpload.public_id,  
       path: cloudUpload.secure_url, 
       embedded: false,
+      userId:req.userId,
     });
 
     // 1 Link PDF to thread
@@ -143,7 +144,7 @@ router.post('/upload/pdf',authMiddleware,upload.single('pdf'), async (req, res) 
 // // Get all uploaded PDFs (for history)
 router.get("/pdf/history", authMiddleware,async (req, res) => {
   try {
-    const pdfs = await PDFfile.find().sort({ uploadedAt: -1 });
+    const pdfs = await PDFfile.find({userId:req.userId}).sort({ uploadedAt: -1 });
     res.json(pdfs);
   } catch (error) {
     console.error("Error fetching PDFs:", error);
@@ -189,12 +190,19 @@ router.post("/chat", authMiddleware,async (req, res) => {
         embeddings,
         {
           url: "http://localhost:6333",
-          collectionName: "langchainjs-testing",
+          collectionName: `user_${req.userId}`,
         }
       );
 
-      const retriever = vectorStore.asRetriever({ k: 4 });
-      const results = await retriever.invoke(message);
+      // const retriever = vectorStore.asRetriever({ k: 4 });
+      // const results = await retriever.invoke(message);
+
+      // Filter only the PDFs attached to this thread
+      const pdfIds = th.pdfId.map(id => id.toString());
+      // Filter only chunks belonging to this thread's PDFs
+      const results = await vectorStore.similaritySearch(message,4,{ must: [ { key: "pdfId", match: {  any: pdfIds  } }   ]  });
+
+
 
       // 2️ System prompt
       const SYSTEM_PROMPT = `You are a helpful assistant that answers questions based on the provided PDF context. 

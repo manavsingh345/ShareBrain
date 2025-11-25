@@ -15,60 +15,92 @@ import path from "path";
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGO_URL! )
+mongoose.connect(process.env.MONGO_URL!)
   .then(() => console.log("Worker connected to DB"))
   .catch(err => console.error("Worker DB error:", err));
 
 const worker = new Worker(
   "file-upload-queue",
   async (job) => {
-    console.log(" Job received:", job.data);
+    console.log("Job received:", job.data);
     const data = JSON.parse(job.data);
 
+    const { pdfId, userId, filename } = data;
 
-      // 1 Download Cloudinary file to temp
+    // 1 Download Cloudinary file to temp
     const tmpFile = path.join(os.tmpdir(), `file-${Date.now()}`);
     const response = await axios.get(data.path, { responseType: "arraybuffer" });
     fs.writeFileSync(tmpFile, response.data);
 
-    // 2 Always treat document as PDF (Cloudinary raw removes extension)
-    let loader = new PDFLoader(tmpFile);
+    // 2 Detect correct loader based on filename
+    let loader;
+    const lower = filename.toLowerCase();
+
+    if (lower.endsWith(".pdf")) loader = new PDFLoader(tmpFile);
+    else if (lower.endsWith(".docx")) loader = new DocxLoader(tmpFile);
+    else if (lower.endsWith(".pptx")) loader = new PPTXLoader(tmpFile);
+    else {
+      console.error("Unsupported file type:", filename);
+      return;
+    }
 
     const docs = await loader.load();
-
-    // Delete temp file after loading
     fs.unlinkSync(tmpFile);
 
-
-    // 2 Split PDF into chunks
+    // Split
     const splitter = new RecursiveCharacterTextSplitter({
       chunkSize: 300,
       chunkOverlap: 50,
     });
-    const splitDocs = await splitter.splitDocuments(docs);
 
-    // 3 Embeddings using Gemini
+    let splitDocs = await splitter.splitDocuments(docs);
+
+    // Inject metadata
+    splitDocs = splitDocs.map(d => ({
+      ...d,
+      metadata: {
+        pdfId: pdfId.toString(),
+        userId: userId.toString()
+      }
+    }));
+
+    // Embeddings
     const embeddings = new GoogleGenerativeAIEmbeddings({
       model: "text-embedding-004",
       apiKey: process.env.GEMINI_API_KEY || "",
     });
 
-    // 4 Store chunks in Qdrant 
-   const vectorStore = await QdrantVectorStore.fromExistingCollection(embeddings, {
+    const collectionName = `user_${userId}`;
+
+    const vectorStore = await QdrantVectorStore.fromExistingCollection(
+      embeddings,
+      {
         url: "http://localhost:6333",
-        collectionName: "langchainjs-testing",
+        collectionName,
+      }
+    );
+
+    // Delete OLD vectors of this PDF only
+    await vectorStore.client.delete(collectionName, {
+      filter: {
+        must: [
+          {
+            key: "pdfId",
+            match: { value: pdfId.toString() }
+          }
+        ]
+      }
     });
 
-    console.log("Deleting old vectors...");
+    console.log("Old vectors removed for pdf:", pdfId);
 
-    await vectorStore.client.delete("langchainjs-testing", {
-      filter: { must: [] }  // delete ALL vectors
-    });
-    console.log("Old chunks deleted!");
-
+    // Add new vectors
     await vectorStore.addDocuments(splitDocs);
-    await PDFfile.findOneAndUpdate({path:data.path},{embedded:true});    //store pdf path in mongodb
-    console.log("PDF chunks stored in Qdrant!");
+
+    // Update DB using pdfId (correct way)
+    await PDFfile.findByIdAndUpdate(pdfId, { embedded: true });
+
+    console.log("PDF chunks stored in Qdrant for:", pdfId);
   },
   {
     concurrency: 100,
@@ -78,3 +110,5 @@ const worker = new Worker(
     },
   }
 );
+
+export default worker;
