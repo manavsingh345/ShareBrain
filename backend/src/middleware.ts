@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { JWT_PASSWORD } from "./config";
+import { JWT_PASSWORD } from "./config.js";
 
 export const authMiddleware = (
   req: Request,
@@ -22,7 +22,7 @@ export const authMiddleware = (
 
     next();
   } catch (err) {
-    console.error("❌ Invalid token:", err);
+    console.error("Invalid token:", err);
     return res.status(403).json({ message: "Invalid or expired token" });
   }
 };

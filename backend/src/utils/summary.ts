@@ -1,4 +1,4 @@
-import generateOpenAiResponse from "./openai";
+import generateOpenAiResponse from "./openai.js";
 
 export const generateTitleFromMessage = async (userMessage: string): Promise<string> => {
   const prompt = `

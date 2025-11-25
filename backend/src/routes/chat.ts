@@ -1,18 +1,18 @@
 import express from "express";
 import thread from "../models/thread.js";
 const router = express.Router();
-import generateOpenAiResponse from "../utils/openai";
-import { authMiddleware } from "../middleware";
+import generateOpenAiResponse from "../utils/openai.js";
+import { authMiddleware } from "../middleware.js";
 import 'dotenv/config';
 import multer from 'multer';
 import {Queue} from "bullmq";
 import { GoogleGenerativeAIEmbeddings,ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { QdrantVectorStore } from "@langchain/qdrant";
-import cloudinary from "../uploadCloudinary";
+import cloudinary from "../uploadCloudinary.js";
 import fs from "fs"
 
 import cors from 'cors'
-import { generateTitleFromMessage } from "../utils/summary";
+import { generateTitleFromMessage } from "../utils/summary.js";
 import PDFfile from "../models/PDFfile.js";
 const app=express();
 app.use(cors())
@@ -152,11 +152,14 @@ router.get("/pdf/history", authMiddleware,async (req, res) => {
   }
 });
 
-router.post("/chat", authMiddleware,async (req, res) => {
-  const { threadId, message } = req.body;
+router.post("/chat1", authMiddleware,async (req, res) => {
+  let { threadId, message } = req.body;
 
-  if (!threadId || !message) {
+  if (!message) {
     return res.status(400).json({ error: "Missing required fields" });
+  }
+  if (!threadId) {
+    threadId = Date.now().toString();
   }
 
   try {
@@ -170,8 +173,10 @@ router.post("/chat", authMiddleware,async (req, res) => {
         title: shortTitle,
         messages: [{ role: "user", content: message }],
       });
+      await th.save();
     } else {
       th.messages.push({ role: "user", content: message });
+      await th.save();
     }
 
     let assistantReply;

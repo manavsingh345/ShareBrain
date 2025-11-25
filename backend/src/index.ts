@@ -3,18 +3,29 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import {z} from "zod";
-const cors = require('cors');
-import {ContentModel, UserModel,LinkModel} from "./models/db";
-import {JWT_PASSWORD} from "./config";
-import {authMiddleware} from "./middleware";
-import { random } from "./utils";
-import generateOpenAiResponse from "./utils/openai";
+import cors from "cors";
+import {ContentModel, UserModel,LinkModel} from "./models/db.js";
+import router from "./routes/chat.js";
+import {JWT_PASSWORD} from "./config.js";
+import {authMiddleware} from "./middleware.js";
+import { random } from "./utils.js";
+import generateOpenAiResponse from "./utils/openai.js";
 const app=express();
 app.use(express.json());
 import path from "path";
 import dotenv from "dotenv";
 
-dotenv.config({ path: path.resolve(__dirname, "../.env") });
+import { fileURLToPath } from "url";
+import { dirname, resolve } from "path";
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config({
+  path: resolve(__dirname, "../.env"),
+});
+
 
 
 mongoose.connect(process.env.MONGO_URL!).then(() => {
@@ -263,6 +274,7 @@ app.post("/api/v1/chat", async(req,res)=>{
       res.status(500).json({message:"Error will sending message"});
     }
 });
+app.use("/api/v1", router);
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");

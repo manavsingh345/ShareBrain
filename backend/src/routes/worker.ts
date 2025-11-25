@@ -1,9 +1,9 @@
 import { Worker } from "bullmq";
 import { QdrantVectorStore } from "@langchain/qdrant";
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
-import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
-import { DocxLoader } from "@langchain/community/document_loaders/fs/docx";
-import { PPTXLoader } from "@langchain/community/document_loaders/fs/pptx";
+import {PDFLoader} from "@langchain/community/document_loaders/fs/pdf";
+import {DocxLoader} from "@langchain/community/document_loaders/fs/docx";
+import {PPTXLoader} from "@langchain/community/document_loaders/fs/pptx";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import PDFfile from "../models/PDFfile.js";
 import mongoose from "mongoose";
