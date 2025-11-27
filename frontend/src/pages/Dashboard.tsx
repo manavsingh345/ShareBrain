@@ -107,7 +107,7 @@ export function Dashboard() {
       <div className="fixed top-0 left-0 h-screen w-10 bg-gray-100 z-0"></div>
       <Sidebar selectedType={selectedType} onSelectType={setSelectedType} user={user} sidebaropen={sidebaropen} setSidebaropen={setSidebaropen} />
       
-      <div className={`p-4 min-h-screen bg-gray-100 transition-all duration-300 
+      <div className={`min-h-screen bg-gray-100 transition-all duration-300 
     ${sidebaropen ? "ml-72" : "ml-10 "}`}>
 
       {selectedType === "chat" && ( <MyContext.Provider value={providerValues}><ChatWindow /></MyContext.Provider>)}  
