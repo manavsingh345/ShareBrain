@@ -2,7 +2,8 @@ import { MyContext } from "./Context"
 import { useContext, useEffect, useState } from "react"
 import "./Chat1.css"
 import ResponseRenderer from "./ResponseRender"
-export default function Chat(){
+
+export default function Chat1(){
     const {newChat,prevChats,reply} = useContext(MyContext);
     const [latestReply,setLatestReply]=useState("");
 

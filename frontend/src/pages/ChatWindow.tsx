@@ -1,5 +1,5 @@
 import { useContext,useState,useEffect } from "react"
-import Chat from "./Chat1"
+import Chat1 from "./Chat1"
 import "./ChatWindow.css"
 import { MyContext } from "./Context"
 import { RingLoader } from "react-spinners"
@@ -18,10 +18,12 @@ export default function ChatWindow(){
             message:prompt,
             threadId:currThreadId
         }
+        const token=localStorage.getItem("token") ?? "";
         const options = {
             method:"POST",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                "Authorization": token 
             },
             body: JSON.stringify(payload),
         };
@@ -83,7 +85,7 @@ export default function ChatWindow(){
         <div className="w-full flex justify-between items-center">
             <span className="m-4">QuickAi</span>
         </div>
-        <Chat></Chat>
+        <Chat1></Chat1>
         <RingLoader color="#fff" loading={loader}/>
 
         <div className="flex flex-col justify-center items-center w-full">
