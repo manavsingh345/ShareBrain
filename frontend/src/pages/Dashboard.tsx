@@ -10,6 +10,9 @@ import { BACKEND_URL } from '../config';
 import Microlink from '@microlink/react';
 import DraggableChatBot from './Draggable';
 import BotButton from './BotButton';
+import ChatWindow from './ChatWindow';
+import { MyContext } from './Context';
+import {v1 as uuidv1} from "uuid";
 
 
 const raw = localStorage.getItem("user");
@@ -23,12 +26,20 @@ export function Dashboard() {
     _id: string;
     title: string;
     link: string;
-    type: "youtube" | "twitter" | "document" | "links";
+    type: "youtube" | "twitter" | "document" | "links" ;
+  }
+  type Chat = {
+    role: string;
+    content: string;
+  };
+  interface Thread {
+    threadId: string;
+    title: string;
   }
 
   const [contents, setContents] = useState<Content[]>([]);
-  const [selectedType, setSelectedType] = useState<"twitter" | "youtube" | "document" | "links">("youtube");
-  const [isChatOpen,setisChatOpen]=useState(true);
+  const [selectedType, setSelectedType] = useState<"twitter" | "youtube" | "document" | "links" | "chat">("youtube");
+  const [isChatOpen,setisChatOpen]=useState(false);
 
   useEffect(() => {
     fetchContents();
@@ -70,6 +81,27 @@ export function Dashboard() {
 
   const filteredContents = contents.filter(content => content.type === selectedType);
   const [sidebaropen, setSidebaropen] = useState(false);
+
+  const [prompt,setPrompt] = useState("");
+  const [reply,setReply] = useState("");
+  const [currThreadId,setcurrThreadId] = useState<string>(uuidv1());
+  const [prevChats,setprevChats]=useState<Chat[]>([]); //store all the chats of current thread
+  const [newChat,setnewChat]=useState(true);
+  const [allThreads,setAllThreads]=useState<Thread[]>([]); //store all the threads
+
+  const providerValues={
+    prompt,setPrompt,
+    reply,setReply,
+    currThreadId,setcurrThreadId,
+    newChat,setnewChat,
+    prevChats,setprevChats,
+    allThreads,setAllThreads,
+  };
+
+
+
+
+
   return (
     <div>
       <div className="fixed top-0 left-0 h-screen w-10 bg-gray-100 z-0"></div>
@@ -77,6 +109,9 @@ export function Dashboard() {
       
       <div className={`p-4 min-h-screen bg-gray-100 transition-all duration-300 
     ${sidebaropen ? "ml-72" : "ml-10 "}`}>
+
+      {selectedType === "chat" && ( <MyContext.Provider value={providerValues}><ChatWindow /></MyContext.Provider>)}  
+
         <CreateContentModel
           open={modelOpen}
           onClose={() => {
@@ -84,7 +119,7 @@ export function Dashboard() {
             fetchContents();
           }}
         />
-        <div className="flex justify-end gap-4">
+        {selectedType!=="chat" && <div className="flex justify-end gap-4">
           <Button
             onClick={() => setModelOpen(true)}
             startIcon={<PlusIcon size="lg" />}
@@ -117,9 +152,9 @@ export function Dashboard() {
             text="Share Brain"
             size="md"
           />
-        </div>
+        </div>}
 
-        <div className="flex gap-6 flex-wrap">
+        {selectedType!=="chat" &&   <div className="flex gap-6 flex-wrap">
           {filteredContents.map(({ type, link, title, _id }) => (
             <Card
               key={_id}
@@ -131,13 +166,11 @@ export function Dashboard() {
               onClick={() => setSelectedCard({ _id, title, link, type })}
             />
           ))}
-        </div>
-          {/* {isChatOpen && <ChatBot onClose={() => setisChatOpen(false)}/>}
-          {!isChatOpen && <BotButton onClick={()=>setisChatOpen(true)}/>}
-           */}
-         {isChatOpen && ( <DraggableChatBot onClose={() => setisChatOpen(false)} />)}
+        </div>}
 
-    {!isChatOpen && ( <BotButton onClick={() => setisChatOpen(true)} />)}
+          
+         {isChatOpen && ( <DraggableChatBot onClose={() => setisChatOpen(false)} />)}
+         {!isChatOpen && ( <BotButton onClick={() => setisChatOpen(true)} />)}
 
 
 

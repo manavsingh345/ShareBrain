@@ -3,8 +3,8 @@ import type { ReactElement } from "react"
 interface side {
     text: string,
     icon: ReactElement,
-    onClick:() => void,
-    selected: boolean;
+    onClick?:() => void,
+    selected?: boolean;
 }
 export function SidebarItem(props: side) {
 

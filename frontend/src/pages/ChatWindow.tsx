@@ -1,0 +1,108 @@
+import { useContext,useState,useEffect } from "react"
+import Chat from "./Chat1"
+import "./ChatWindow.css"
+import { MyContext } from "./Context"
+import { RingLoader } from "react-spinners"
+
+
+
+export default function ChatWindow(){
+    const {prompt,setPrompt,reply,setReply,currThreadId,setprevChats,setnewChat}=useContext(MyContext);
+    const [loader,setloader]=useState<boolean>(false);
+   
+
+    const getReply= async ()=>{
+        setloader(true);
+        setnewChat(false);
+        const payload={
+            message:prompt,
+            threadId:currThreadId
+        }
+        const options = {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(payload),
+        };
+        try{
+            const response=await fetch("http://localhost:3000/api/v1/chat1",options);
+            const data=await response.json();
+            console.log(data);
+            setReply(data.reply);
+        }catch(err){
+            console.log(err);
+        }
+        setloader(false);
+    }   
+    
+    const handleFile=  ()=>{
+        const el=document.createElement("input");
+        el.setAttribute("type","file");
+        el.setAttribute("accept", ".pdf, .pptx, .docx");
+        el.addEventListener('change', async ()=>{
+            if(el.files && el.files.length>0){
+                const file=el.files.item(0);
+                if(file){
+                    const formData = new FormData();
+                    formData.append('pdf',file);
+                    formData.append("threadId", currThreadId); //send the threadId 
+                    const response=await fetch("http://localhost:3000/api/v1/upload/pdf",{
+                        method:"POST",
+                        body:formData,
+                    });
+                    console.log(response);
+                }
+                
+               
+               console.log("file uploaded");
+            }
+        })
+        el.click();
+    }
+
+
+    //Append newChats to prevChats
+    useEffect(()=>{
+        if(prompt && reply){
+            setprevChats(prevChats => (
+                [...prevChats,{
+                    role:"user",
+                    content:prompt
+                },{
+                    role:"assistant",
+                    content:reply
+                }]
+            ))
+        }
+        setPrompt("");
+    },[reply]);
+
+    return(
+        <div className="chatWindow h-screen w-full flex flex-col justify-between items-center text-center bg-white text-black">
+        <div className="w-full flex justify-between items-center">
+            <span className="m-4">QuickAi</span>
+        </div>
+        <Chat></Chat>
+        <RingLoader color="#fff" loading={loader}/>
+
+        <div className="flex flex-col justify-center items-center w-full">
+            <div className="inputBox w-full flex justify-between items-center relative">
+              
+                <textarea  placeholder="Ask anything" className="w-full" 
+                value={prompt} onChange={(e)=>setPrompt(e.target.value)}
+                onKeyDown={(e)=> e.key === 'Enter'? getReply() : '' }/>
+                <div className="file absolute left-4 top-15 -translate-y-1/2 cursor-pointer  text-lg" onClick={handleFile}><i className="fa-solid fa-file"></i></div> 
+                <div id="submit" onClick={getReply} className="cursor-pointer absolute flex justify-center items-center text-xl">
+                    
+                    <i className="fa-solid fa-paper-plane"></i>
+                     
+                </div>
+            </div>
+            <p className="info text-1xl">
+                Quick Ai can make mistakes. Check important info. See Cookie Preferences.
+            </p>
+        </div>
+        </div>
+    )
+};

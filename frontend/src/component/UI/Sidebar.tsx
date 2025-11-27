@@ -4,13 +4,14 @@ import { YoutubeIcon } from "../../icons/YoutubeIcon";
 import { Document } from "../../icons/Document";
 import { SidebarItem } from "./SidebarItem";
 import { LinkIcon } from "../../icons/LinkIcon";
+import ChatIcon from "../../icons/ChatIcon";
 import { useNavigate } from "react-router-dom";
 import SidebarIcon from "../../icons/SidebarIcon";
 
 
 interface SidebarProps {
-  selectedType: "twitter" | "youtube" | "document" | "links";
-  onSelectType: (type: "twitter" | "youtube" | "document" | "links") => void;
+  selectedType: "twitter" | "youtube" | "document" | "links" | "chat";
+  onSelectType: (type: "twitter" | "youtube" | "document" | "links" | "chat") => void;
   user?:{
     username:String,
     email:String
@@ -65,7 +66,12 @@ export function Sidebar({ selectedType, onSelectType, user,sidebaropen , setSide
           selected={selectedType === "document"}
           onClick={() => onSelectType("document")}
         />
-
+        <SidebarItem
+          text="Chat With Anything"
+          icon={<ChatIcon />}
+          selected={selectedType === "chat"}
+          onClick={() => onSelectType("chat")}
+        />
         
       </div>
       {user && (
