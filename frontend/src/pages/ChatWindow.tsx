@@ -3,6 +3,8 @@ import Chat1 from "./Chat1"
 import "./ChatWindow.css"
 import { MyContext } from "./Context"
 import { RingLoader } from "react-spinners"
+import Sidebar1 from "./Sidebar1"
+
 
 
 
@@ -81,10 +83,13 @@ export default function ChatWindow(){
     },[reply]);
 
     return(
+        <div className="flex h-screen w-full">
+        <div className="flex-1">
         <div className="chatWindow h-screen w-full flex flex-col justify-between items-center text-center bg-white text-black">
         <div className="w-full flex justify-between items-center">
             <span className="m-4">QuickAi</span>
         </div>
+        
         <Chat1></Chat1>
         <RingLoader color="#000" loading={loader}/>
 
@@ -104,7 +109,11 @@ export default function ChatWindow(){
             <p className="info text-1xl">
                 Quick Ai can make mistakes. Check important info. See Cookie Preferences.
             </p>
+
         </div>
+        </div>
+        </div>
+        <Sidebar1/>
         </div>
     )
 };
