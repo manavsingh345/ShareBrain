@@ -117,6 +117,8 @@ export function Dashboard() {
             fetchContents();
           }}
         />
+
+
         {selectedType!=="chat" && <div className="flex justify-end gap-4">
           <Button
             onClick={() => setModelOpen(true)}
@@ -152,6 +154,8 @@ export function Dashboard() {
           />
         </div>}
 
+
+
         {selectedType!=="chat" &&   <div className="flex gap-6 flex-wrap">
           {filteredContents.map(({ type, link, title, _id }) => (
             <Card
@@ -166,10 +170,10 @@ export function Dashboard() {
           ))}
         </div>}
 
-          
+         {selectedType!=="chat" && <>
          {isChatOpen && ( <DraggableChatBot onClose={() => setisChatOpen(false)} />)}
          {!isChatOpen && ( <BotButton onClick={() => setisChatOpen(true)} />)}
-
+         </>}
 
 
       
