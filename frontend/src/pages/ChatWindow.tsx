@@ -86,7 +86,7 @@ export default function ChatWindow(){
             <span className="m-4">QuickAi</span>
         </div>
         <Chat1></Chat1>
-        <RingLoader color="#fff" loading={loader}/>
+        <RingLoader color="#000" loading={loader}/>
 
         <div className="flex flex-col justify-center items-center w-full">
             <div className="inputBox w-full flex justify-between items-center relative">
