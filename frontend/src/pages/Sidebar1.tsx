@@ -12,7 +12,6 @@ interface Thread {
 export default function Sidebar1(){
 
     const {allThreads,setAllThreads,currThreadId,setPrompt,setnewChat,setReply,setcurrThreadId,setprevChats} = useContext(MyContext);
-    const [CardOpen,SetCardOpen]=useState(false);
     const [sidebarOpen,setsidebarOpen]=useState(true);
 
     
@@ -62,9 +61,6 @@ export default function Sidebar1(){
         }catch(e){  
             console.log(e);
         }
-    }
-    const Card= async ()=>{
-        SetCardOpen((prev)=>!prev);
     }
     const Side=async()=>{
         setsidebarOpen((prev)=>!prev);
