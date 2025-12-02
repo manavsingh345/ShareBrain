@@ -18,7 +18,12 @@ export default function Sidebar1(){
 
     const getAllThreads = async () => {
         try{
-            const response=await fetch("http://localhost:3000/api/v1/thread");
+            const token=localStorage.getItem("token") ?? "";
+            const response=await fetch("http://localhost:3000/api/v1/thread",{
+                headers:{
+                    "Authorization": token
+                }
+            });
             const res=await response.json();
             const filterData =await res.map((thread:Thread) => ({ threadId: thread.threadId, title: thread.title, hasPDF: thread.hasPDF}));
             setAllThreads(filterData);
@@ -41,7 +46,12 @@ export default function Sidebar1(){
     const changeThread= async (newthreadId:string)=>{
         setcurrThreadId(newthreadId);
         try{
-            const response=await fetch(`http://localhost:3000/api/v1/thread/${newthreadId}`);
+            const token=localStorage.getItem("token") ?? "";
+            const response=await fetch(`http://localhost:3000/api/v1/thread/${newthreadId}`,{
+                headers:{
+                    "Authorization": token
+                }
+            });
             const res=await response.json();
             console.log(res);
             setprevChats(res);
@@ -53,7 +63,10 @@ export default function Sidebar1(){
     }
     const deleteThread= async(threadId:string)=>{
         try{
-            await fetch(`http://localhost:3000/api/v1/thread/${threadId}`,{method:"DELETE"});
+            const token=localStorage.getItem("token") ?? "";
+            await fetch(`http://localhost:3000/api/v1/thread/${threadId}`,{headers:{
+                "Authorization": token
+            },method:"DELETE"});
             setAllThreads(prev => prev.filter(thread=>thread.threadId !== threadId));
             if(threadId === currThreadId){
                 NewChat();

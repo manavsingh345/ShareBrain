@@ -9,9 +9,10 @@ import Sidebar1 from "./Sidebar1"
 
 
 export default function ChatWindow(){
-    const {prompt,setPrompt,reply,setReply,currThreadId,setprevChats,setnewChat}=useContext(MyContext);
+    const {prompt,setPrompt,reply,setReply,currThreadId,setprevChats,setnewChat,setcurrThreadId,newChat,prevChats,allThreads,setAllThreads}=useContext(MyContext);
     const [loader,setloader]=useState<boolean>(false);
    
+    
 
     const getReply= async ()=>{
         setloader(true);
@@ -82,6 +83,8 @@ export default function ChatWindow(){
         setPrompt("");
     },[reply]);
 
+
+
     return(
         <div className="flex h-screen w-full">
         <div className="flex-1">
@@ -113,7 +116,9 @@ export default function ChatWindow(){
         </div>
         </div>
         </div>
-        <Sidebar1/>
+
+       {/* <MyContext.Provider value={providerValues} ><Sidebar1/></MyContext.Provider>  */}
+       <Sidebar1/>
         </div>
     )
 };

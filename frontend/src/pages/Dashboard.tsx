@@ -108,7 +108,10 @@ export function Dashboard() {
       <div className={`min-h-screen bg-gray-100 transition-all duration-300 
     ${sidebaropen ? "ml-72" : "ml-10 "}`}>
 
-      {selectedType === "chat" && ( <MyContext.Provider value={providerValues}><ChatWindow /></MyContext.Provider>)}  
+      {/* {selectedType === "chat" && ( <MyContext.Provider value={providerValues}><ChatWindow /></MyContext.Provider>)}   */}
+        <MyContext.Provider value={providerValues}>
+    {selectedType === "chat" && <ChatWindow />}
+</MyContext.Provider>
 
         <CreateContentModel
           open={modelOpen}
