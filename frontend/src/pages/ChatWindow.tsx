@@ -9,7 +9,7 @@ import Sidebar1 from "./Sidebar1"
 
 
 export default function ChatWindow(){
-    const {prompt,setPrompt,reply,setReply,currThreadId,setprevChats,setnewChat,setcurrThreadId,newChat,prevChats,allThreads,setAllThreads}=useContext(MyContext);
+    const {prompt,setPrompt,reply,setReply,currThreadId,setprevChats,setnewChat}=useContext(MyContext);
     const [loader,setloader]=useState<boolean>(false);
    
     
