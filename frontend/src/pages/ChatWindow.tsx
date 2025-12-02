@@ -107,7 +107,7 @@ export default function ChatWindow(){
                 </div>
             </div>
             <p className="info text-1xl">
-                Quick Ai can make mistakes. Check important info. See Cookie Preferences.
+                SecondBrain can make mistakes. Check important info. See Cookie Preferences.
             </p>
 
         </div>
