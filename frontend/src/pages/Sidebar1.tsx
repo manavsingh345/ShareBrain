@@ -1,5 +1,5 @@
 import "./Sidebar1.css"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { MyContext } from "./Context"
 import {v1 as uuidv1} from "uuid";
 import BrainIcon from "../icons/BrainIcon";
