@@ -19,10 +19,11 @@
 }
 
 .Sidebar {
+  max-width: 21%;
   width: 100%;
   height: 100%;
-  background-color: #ffffff;
-  color: #fdfdfd;
+  background-color: #4f4c4c;
+  color: #070707;
   overflow-y: auto;
 }
 
@@ -64,7 +65,7 @@
     font-size:14px;
     border: solid 10px transparent;
     position:relative;
-    color:black;
+    color:#fff;
 }
 .history li:hover{
     background-color: rgba(78, 76, 76, 0.05);

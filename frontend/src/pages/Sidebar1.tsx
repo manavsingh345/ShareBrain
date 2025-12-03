@@ -12,7 +12,7 @@ interface Thread {
 export default function Sidebar1(){
 
     const {allThreads,setAllThreads,currThreadId,setPrompt,setnewChat,setReply,setcurrThreadId,setprevChats} = useContext(MyContext);
-    const [sidebarOpen,setsidebarOpen]=useState(true);
+   
 
     
 
@@ -75,13 +75,10 @@ export default function Sidebar1(){
             console.log(e);
         }
     }
-    const Side=async()=>{
-        setsidebarOpen((prev)=>!prev);
-    }
+    
     return(
-        <div className={`side  ${sidebarOpen ? "open" : "closed"}`}>
-            <button onClick={Side}><img src="src\assets\expand.png"  className="h-6 w-7" alt="Menu" /></button>
-        {sidebarOpen && <section className="Sidebar flex flex-col justify-between h-screen" >
+
+        <section className="Sidebar flex flex-col justify-between h-screen" >
             <button className="flex justify-between items-center cursor-pointer" onClick={NewChat}>
                 <span><BrainIcon height={25} width={25}></BrainIcon></span>
                 <span><i className="fa-solid fa-pen-to-square"></i></span>
@@ -98,8 +95,8 @@ export default function Sidebar1(){
                     ))
                 }
             </ul>
-        </section>}
-        </div>
+        </section>
+       
         
     )
 };
