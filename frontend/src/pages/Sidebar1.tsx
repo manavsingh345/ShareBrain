@@ -78,8 +78,9 @@ export default function Sidebar1(){
     
     return(
 
-        <section className="Sidebar flex flex-col justify-between h-screen" >
-            <button className="flex justify-between items-center cursor-pointer" onClick={NewChat}>
+        <section className="Sidebar flex flex-col justify-between h-full relative">
+            <div className="absolute left-0 top-[20px] bottom-[20px] w-[4px] bg-gray-100"></div>
+            <button className="flex justify-between items-center cursor-pointer p-6 px-10" onClick={NewChat}>
                 <span><BrainIcon height={25} width={25}></BrainIcon></span>
                 <span><i className="fa-solid fa-pen-to-square"></i></span>
             </button>

@@ -86,12 +86,9 @@ export default function ChatWindow(){
 
 
     return(
-        <div className="flex h-screen w-full">
+        <div className="flex h-[calc(100vh-64px)] w-full">
         <div className="flex-1">
-        <div className="chatWindow h-screen w-full flex flex-col justify-between items-center text-center bg-white text-black">
-        <div className="w-full flex justify-between items-center">
-            <span className="m-4">QuickAi</span>
-        </div>
+        <div className="chatWindow h-full w-full flex flex-col justify-between items-center text-center bg-white text-black">
         
         <Chat1></Chat1>
         <RingLoader color="#000" loading={loader}/>
@@ -117,7 +114,7 @@ export default function ChatWindow(){
         </div>
         </div>
 
-       {/* <MyContext.Provider value={providerValues} ><Sidebar1/></MyContext.Provider>  */}
+       
        <Sidebar1/>
         </div>
     )

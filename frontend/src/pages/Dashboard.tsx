@@ -13,6 +13,8 @@ import BotButton from './BotButton';
 import ChatWindow from './ChatWindow';
 import { MyContext } from './Context';
 import {v1 as uuidv1} from "uuid";
+import ChatNavbar from './ChatNavbar';
+
 
 
 const raw = localStorage.getItem("user");
@@ -109,9 +111,16 @@ export function Dashboard() {
     ${sidebaropen ? "ml-72" : "ml-10 "}`}>
 
       {/* {selectedType === "chat" && ( <MyContext.Provider value={providerValues}><ChatWindow /></MyContext.Provider>)}   */}
-        <MyContext.Provider value={providerValues}>
-    {selectedType === "chat" && <ChatWindow />}
+       <MyContext.Provider value={providerValues}>
+    {selectedType === "chat" && (
+        <>
+            <ChatNavbar />
+            <ChatWindow /> 
+        </>
+    )}
 </MyContext.Provider>
+
+
 
         <CreateContentModel
           open={modelOpen}

@@ -1,8 +1,11 @@
 .chats{
     width: 960px;
     overflow-y: scroll;
-    padding: 8rem;
-    margin-left: 8px;
+    padding-top: 5rem;
+    /* padding: 8rem; */
+    padding-right: 8rem;
+    padding-bottom: 8rem;
+    padding-left: 8rem;
 }
 .userDiv{
     display: flex;
