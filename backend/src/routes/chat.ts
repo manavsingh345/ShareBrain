@@ -154,139 +154,26 @@ router.get("/pdf/history", authMiddleware,async (req, res) => {
   }
 });
 
-// router.post("/chat1", authMiddleware,async (req, res) => {
-//   let { threadId, message } = req.body;
-
-//   if (!message) {
-//     return res.status(400).json({ error: "Missing required fields" });
-//   }
-//   if (!threadId) {
-//     threadId = Date.now().toString();
-//   }
-
-//   try {
-//     // --- Fetch or create thread ---
-//     let th = await thread.findOne({ threadId, userId: req.userId});
-//     if (!th) {
-//       const shortTitle = await generateTitleFromMessage(message);
-//       th = new thread({
-//         userId:req.userId,
-//         threadId,
-//         title: shortTitle,
-//         messages: [{ role: "user", content: message }],
-//       });
-//       await th.save();
-//     } else {
-//       th.messages.push({ role: "user", content: message });
-//       await th.save();
-//     }
-
-//     let assistantReply;
-
-//     // --- Check if thread has PDFs ---
-//     if (th.pdfId && th.pdfId.length > 0) {
-//       console.log("PDFs found → using Gemini with context");
-
-//       // 1️ Build embeddings retriever
-//       const embeddings = new GoogleGenerativeAIEmbeddings({
-//         model: "text-embedding-004",
-//         apiKey: process.env.GEMINI_RAG_KEY || "",
-//       });
-
-//       const vectorStore = await QdrantVectorStore.fromExistingCollection(
-//         embeddings,
-//         {
-//           url: "http://localhost:6333",
-//           collectionName: `user_${req.userId}`,
-//         }
-//       );
-
-//       // const retriever = vectorStore.asRetriever({ k: 4 });
-//       // const results = await retriever.invoke(message);
-
-//       // Filter only the PDFs attached to this thread
-//       const pdfIds = th.pdfId.map(id => id.toString());
-//       // Filter only chunks belonging to this thread's PDFs
-//       // const results = await vectorStore.similaritySearch(message,4,{ must: [ { key: "pdfId", match: {  any: pdfIds  } }   ]  });
-//       const filter = {
-//   should: pdfIds.map(id => ({
-//     key: "pdfId",
-//     match: { value: id }   // ✔ correct match syntax
-//   }))
-// };
-
-// const results = await vectorStore.similaritySearch(message, 4, filter);
-
-
-
-//       // 2️ System prompt
-//       const SYSTEM_PROMPT = `You are a helpful assistant that answers questions based on the provided PDF context. 
-//       If the answer exists in the context, answer from context.
-//       If the context does not contain the answer, rely on your general knowledge.
-//       Do not say "context not provided". 
-//       Instead, answer naturally.
-//       Context: ${JSON.stringify(results)}`;
-
-//       // 3️ Gemini chat
-//       const model = new ChatGoogleGenerativeAI({
-//         model: "gemini-2.5-flash",
-//         apiKey: process.env.GEMINI_RAG_KEY || "",
-//       });
-
-//       const response = await model.invoke([
-//         ["system", SYSTEM_PROMPT],
-//         ["human", message],
-//       ]);
-
-//        if (typeof response.content === "string") {
-//         assistantReply = response.content;
-//       } else if (Array.isArray(response.content)) {
-//         assistantReply = response.content
-//            .map((block) => ("text" in block ? block.text : ""))
-//           .join("");
-//       } else {
-//         assistantReply = "Sorry, I couldn’t generate a proper response.";
-//       }
-//     } else {
-//       console.log("No PDFs → using standard OpenAI reply");
-//       assistantReply = await generateOpenAiResponse(message);
-//     }
-
-//     // --- Save and return ---
-//     th.messages.push({ role: "assistant", content: assistantReply });
-//     th.updatedAt = new Date();
-//     await th.save();
-
-//     res.json({ reply: assistantReply });
-//   } catch (e) {
-//     console.error(e);
-//     res.status(500).json({ error: "Error while sending message" });
-//   }
-// });
-router.post("/chat1", authMiddleware, async (req, res) => {
+router.post("/chat1", authMiddleware,async (req, res) => {
   let { threadId, message } = req.body;
 
   if (!message) {
     return res.status(400).json({ error: "Missing required fields" });
   }
-
-  // Create threadId if not provided
   if (!threadId) {
     threadId = Date.now().toString();
   }
 
   try {
-    // --- Fetch or create thread -------------------------------------------------------
-    let th = await thread.findOne({ threadId, userId: req.userId });
-
+    // --- Fetch or create thread ---
+    let th = await thread.findOne({ threadId, userId: req.userId});
     if (!th) {
       const shortTitle = await generateTitleFromMessage(message);
       th = new thread({
-        userId: req.userId,
+        userId:req.userId,
         threadId,
         title: shortTitle,
         messages: [{ role: "user", content: message }],
-        pdfId: [],
       });
       await th.save();
     } else {
@@ -296,17 +183,16 @@ router.post("/chat1", authMiddleware, async (req, res) => {
 
     let assistantReply;
 
-    // --- PDF Context Retrieval ---------------------------------------------------------
+    // --- Check if thread has PDFs ---
     if (th.pdfId && th.pdfId.length > 0) {
       console.log("PDFs found → using Gemini with context");
 
-      // Build embeddings (same model worker uses)
+      // 1️ Build embeddings retriever
       const embeddings = new GoogleGenerativeAIEmbeddings({
         model: "text-embedding-004",
         apiKey: process.env.GEMINI_RAG_KEY || "",
       });
 
-      // Load the user's Qdrant collection
       const vectorStore = await QdrantVectorStore.fromExistingCollection(
         embeddings,
         {
@@ -315,37 +201,29 @@ router.post("/chat1", authMiddleware, async (req, res) => {
         }
       );
 
-      // Filter only chunks belonging to PDFs in this thread
-      const pdfIds = th.pdfId.map(id => id.toString());
-
-      const filter = {
-        should: pdfIds.map(id => ({
-          key: "metadata.pdfId",
-          match: { value: id }
-        }))
-      };
-
-
+      // Filter only the PDFs attached to this thread
+        const pdfIds = th.pdfId.map(id => id.toString());
+      // Filter only chunks belonging to this thread's PDFs
+        const filter = {
+            should: pdfIds.map(id => ({
+            key: "metadata.pdfId",
+            match: { value: id }
+          }))
+        };
       // Retrieve top-k chunks
       const results = await vectorStore.similaritySearch(message, 6, filter);
-      // console.log("RAG RESULTS:", results.length, results);
 
 
-      // Build readable context text
+      // 2️ System prompt
       const contextText = results.map(r => r.pageContent).join("\n\n");
+      const SYSTEM_PROMPT = `You are a helpful assistant that answers questions based on the provided PDF context. 
+      If the answer exists in the context, answer from context.
+      If the context does not contain the answer, rely on your general knowledge.
+      Do not say "context not provided". 
+      Instead, answer naturally.
+      Context: ${contextText}`;
 
-      // --- System prompt with clean context -------------------------------------
-      const SYSTEM_PROMPT = `
-You are a highly helpful assistant. Use the provided PDF context to answer the user's question.
-If the answer is found in the PDF, extract it accurately.
-If the PDF does not contain the answer, answer normally — but do NOT say "I don't have context".
-
---- PDF CONTEXT START ---
-${contextText}
---- PDF CONTEXT END ---
-`;
-
-      // --- Gemini Chat Model ------------------------------------------------------
+      // 3️ Gemini chat
       const model = new ChatGoogleGenerativeAI({
         model: "gemini-2.5-flash",
         apiKey: process.env.GEMINI_RAG_KEY || "",
@@ -356,34 +234,31 @@ ${contextText}
         ["human", message],
       ]);
 
-      // Format Gemini output
-      if (typeof response.content === "string") {
+       if (typeof response.content === "string") {
         assistantReply = response.content;
       } else if (Array.isArray(response.content)) {
         assistantReply = response.content
-          .map(block => ("text" in block ? block.text : ""))
+           .map((block) => ("text" in block ? block.text : ""))
           .join("");
       } else {
-        assistantReply = "Sorry, I couldn't generate a proper response.";
+        assistantReply = "Sorry, I couldn’t generate a proper response.";
       }
-
     } else {
-      // --- No PDF attached → fallback to normal chatbot ---------------------------
-      console.log("No PDFs → using standard OpenAI/GPT reply");
+      console.log("No PDFs → using standard OpenAI reply");
       assistantReply = await generateOpenAiResponse(message);
     }
 
-    // --- Save assistant reply to thread -------------------------------------------
+    // --- Save and return ---
     th.messages.push({ role: "assistant", content: assistantReply });
     th.updatedAt = new Date();
     await th.save();
 
     res.json({ reply: assistantReply });
-
   } catch (e) {
-    console.error("Chat error:", e);
+    console.error(e);
     res.status(500).json({ error: "Error while sending message" });
   }
 });
+
 
 export default router;
