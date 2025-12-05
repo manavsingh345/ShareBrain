@@ -292,7 +292,7 @@ const worker = new Worker(
     }
 
     // Step 4: split into chunks
-    const splitter = new RecursiveCharacterTextSplitter({ chunkSize: 300, chunkOverlap: 50 });
+    const splitter = new RecursiveCharacterTextSplitter({ chunkSize: 400, chunkOverlap: 100 });
     let splitDocs;
     try {
       splitDocs = await splitter.splitDocuments(docs);
@@ -346,7 +346,7 @@ const worker = new Worker(
       await vectorStore.client.delete(collectionName, {
         filter: {
           must: [
-            { key: "pdfId", match: { value: pdfId.toString() } }
+            { key: "metadata.pdfId", match: { value: pdfId.toString() } }
           ]
         }
       });

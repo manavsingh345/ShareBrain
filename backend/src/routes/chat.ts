@@ -79,69 +79,83 @@ router.delete("/thread/:threadId",authMiddleware,async(req,res)=>{
 
 // //pdf
 const upload = multer({ dest: "uploads/" }); 
-
-router.post('/upload/pdf',authMiddleware,upload.single('pdf'), async (req, res) => {
+router.post('/upload/pdf', authMiddleware, upload.single('pdf'), async (req, res) => {
   try {
+    const userId = req.userId;
+    const originalName = req.file?.originalname;
 
-
-    //upload to cloudinary
-    const localpath=req.file?.path;
-    const cloudUpload=await cloudinary.uploader.upload(localpath!,{
-      folder:"pdfs",
-      resource_type:"raw"
-    })
-
-    //delete tempfile
+    // 1 Upload to Cloudinary
+    const localpath = req.file?.path;
+    const cloudUpload = await cloudinary.uploader.upload(localpath!, {
+      folder: "pdfs",
+      resource_type: "raw"
+    });
     if(localpath) fs.unlinkSync(localpath);
 
+    // 2 Check if this PDF was uploaded before by same user
+    let pdf = await PDFfile.findOne({ userId, originalName });
 
-    //save cloud url to DB
-    const pdf = await PDFfile.create({
-      originalName: req.file?.originalname,
-      filename: cloudUpload.public_id,  
-      path: cloudUpload.secure_url, 
-      embedded: false,
-      userId:req.userId,
-    });
+    if (pdf) {
+      console.log("Same PDF uploaded again → reusing pdfId:", pdf._id);
+      // update cloud path
+      pdf.path = cloudUpload.secure_url;
+      pdf.filename = cloudUpload.public_id;
+      pdf.embedded = false; // re-embed required
+      await pdf.save();
+    } else {
+      console.log("New PDF uploaded → creating new pdfId");
+      pdf = await PDFfile.create({
+        originalName,
+        filename: cloudUpload.public_id,
+        path: cloudUpload.secure_url,
+        embedded: false,
+        userId
+      });
+    }
 
-    // 1 Link PDF to thread
-    let {threadId,message}=req.body;
-    const userId=req.userId;
+    // 3 Link PDF to thread
+    let { threadId, message } = req.body;
     let th;
+
     if (threadId) {
-    th = await thread.findOne({ threadId, userId});
-    if (!th) {
-        console.log(`Thread ${threadId} not found → creating new thread`);
+      th = await thread.findOne({ threadId, userId });
+
+      if (!th) {
         const shortTitle = await generateTitleFromMessage(message);
         th = new thread({ threadId, title: shortTitle, messages: [], pdfId: [pdf._id], userId });
-        await th.save();
-    } else {
-        th.pdfId.push(pdf._id);
+      } else {
+        if (!th.pdfId.includes(pdf._id)) th.pdfId.push(pdf._id);
         th.updatedAt = new Date();
-        await th.save();
-    }
+      }
+      await th.save();
     } else {
-    console.log("No threadId provided in body → creating new thread");
-    const newThreadId = Date.now().toString(); // or use UUID
-    th = new thread({ threadId: newThreadId, title: "New Thread", messages: [], pdfId: [pdf._id], userId});
-    await th.save();
+      const newThreadId = Date.now().toString();
+      th = new thread({ threadId: newThreadId, title: "New Thread", messages: [], pdfId: [pdf._id], userId });
+      await th.save();
     }
 
-
-    // 2 Add to queue
-    await queue.add('file-ready', JSON.stringify({
+    // 4 Send job to worker
+    await queue.add("file-ready", {
       pdfId: pdf._id.toString(),
-      userId: req.userId,
-      filename: req.file?.originalname || cloudUpload.original_filename || cloudUpload.public_id,
+      userId,
+      filename: originalName,
       path: cloudUpload.secure_url
-    }));
+    });
 
-    res.json({ message: "Uploaded successfully!" });
+    return res.json({
+      message: pdf.embedded
+        ? "PDF updated and re-embedding started."
+        : "PDF uploaded successfully. Embedding started.",
+      pdfId: pdf._id
+    });
+
   } catch (err) {
-    console.error(" Upload failed:", err);
-    res.status(500).json({ error: "Failed to upload PDF" });
+    console.error("Upload failed:", err);
+    return res.status(500).json({ error: "Failed to upload PDF" });
   }
 });
+
+
 
 // // Get all uploaded PDFs (for history)
 router.get("/pdf/history", authMiddleware,async (req, res) => {
