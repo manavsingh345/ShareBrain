@@ -42,6 +42,7 @@ export default function ChatWindow(){
     }   
     
     const handleFile=  ()=>{
+        const token=localStorage.getItem("token") ?? "";
         const el=document.createElement("input");
         el.setAttribute("type","file");
         el.setAttribute("accept", ".pdf, .pptx, .docx");
@@ -54,6 +55,9 @@ export default function ChatWindow(){
                     formData.append("threadId", currThreadId); //send the threadId 
                     const response=await fetch("http://localhost:3000/api/v1/upload/pdf",{
                         method:"POST",
+                        headers:{
+                            "Authorization": token 
+                        },
                         body:formData,
                     });
                     console.log(response);
