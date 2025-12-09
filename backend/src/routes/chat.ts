@@ -147,7 +147,8 @@ router.post('/upload/pdf', authMiddleware, upload.single('pdf'), async (req, res
         ? "PDF updated and re-embedding started."
         : "PDF uploaded successfully. Embedding started.",
       pdfId: pdf._id,
-      path: cloudUpload.secure_url
+      path: cloudUpload.secure_url,
+      filename: originalName
     });
 
   } catch (err) {
