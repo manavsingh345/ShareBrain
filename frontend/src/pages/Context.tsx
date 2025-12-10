@@ -2,6 +2,8 @@ import { createContext, type Dispatch, type SetStateAction } from "react";
 type Chat = {
   role: string;
   content: string;
+  fileUrl?: string;
+  fileName?: string;
 };
 interface Thread {
   threadId: string;

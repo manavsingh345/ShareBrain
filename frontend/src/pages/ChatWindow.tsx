@@ -40,12 +40,12 @@ export default function ChatWindow(){
 
             setuploadedFileurl("");
             setUploadedFilename("");
-            setPrompt("");
         }catch(err){
             console.log(err);
         }
         setloader(false);
     }   
+    
     
     const handleFile=  ()=>{
         const token=localStorage.getItem("token") ?? "";
@@ -70,13 +70,17 @@ export default function ChatWindow(){
                     // console.log("Uplaod API data",data);
 
                     if(data.path){
+                        setReply("");
                         setuploadedFileurl(data.path);
                         setUploadedFilename(data.filename);
-                    }
-                    
+                        setprevChats(prev => [...prev,{
+                                    role: "user",
+                                    content: "",        // or "uploaded a file"
+                                    fileUrl: data.path,
+                                    fileName: data.filename,
+                                }]);
+                    }    
                 }
-                
-               
                console.log("file uploaded");
             }
         })
@@ -90,7 +94,8 @@ export default function ChatWindow(){
             setprevChats(prevChats => (
                 [...prevChats,{
                     role:"user",
-                    content:prompt
+                    content:prompt,
+
                 },{
                     role:"assistant",
                     content:reply

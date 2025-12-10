@@ -32,8 +32,20 @@ export default function Chat1(){
             {
                 prevChats?.slice(0,-1).map((chat,idx)=>
                 <div className={chat.role==="user" ? "userDiv" : "gptDiv"} key={idx}>
-                    {chat.role==="user" ? 
-                    <p className="userMessage">{chat.content}</p> : 
+                   {chat.role==="user" ? 
+                <div>
+                    {chat.fileUrl && (
+                <a
+                    href={chat.fileUrl}
+                    target="_blank"
+                    className="inline-flex items-center gap-2 bg-gray-200 px-2 py-1 rounded-lg text-sm shadow mb-1"
+                >
+                <i className="fa-solid fa-file text-gray-700"></i>
+                <span className="max-w-[140px] truncate">{chat.fileName}</span>
+                </a>
+                )}
+                <p className="userMessage">{chat.content}</p>
+                </div>: 
                     <div className="prose max-w-none dark:prose-invert">
                     <ResponseRenderer content={chat.content} />
                 </div>
