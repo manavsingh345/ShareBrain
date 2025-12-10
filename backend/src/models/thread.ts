@@ -2,8 +2,10 @@ import mongoose, { Schema } from "mongoose";
 
 const MessageSchema=new Schema({
     role:{type:String, required:true},
-    content:{type:String,required:true},
-    TimeStamp:{type:Date,default:Date.now}
+    content:{type:String,default:""},
+    fileUrl: { type: String, default: null },
+    fileName: { type: String, default: null },
+    TimeStamp:{type:Date,default:Date.now},
 });
 
 const ThreadSchema=new Schema({

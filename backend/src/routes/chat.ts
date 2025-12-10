@@ -142,6 +142,16 @@ router.post('/upload/pdf', authMiddleware, upload.single('pdf'), async (req, res
       path: cloudUpload.secure_url
     });
 
+    // 5  SAVE a message for this uploaded PDF in the thread history
+   th.messages.push({
+    role: "user",
+    content: "", // optional text like "uploaded a PDF"
+    fileUrl: cloudUpload.secure_url,
+    fileName: originalName
+  });
+
+  await th.save();
+
     return res.json({
       message: pdf.embedded
         ? "PDF updated and re-embedding started."
