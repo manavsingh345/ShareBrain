@@ -37,6 +37,10 @@ export default function ChatWindow(){
             const data=await response.json();
             console.log(data);
             setReply(data.reply);
+
+            setuploadedFileurl("");
+            setUploadedFilename("");
+            setPrompt("");
         }catch(err){
             console.log(err);
         }
