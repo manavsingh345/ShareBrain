@@ -1,6 +1,5 @@
-import { link } from "fs";
 import mongoose,{model,Schema, Types} from "mongoose";
-import { title } from "process";
+
 
 const UserSchema=new Schema({
     username:{type:String,unique:true},
